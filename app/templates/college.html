@@ -1,0 +1,364 @@
+{% extends 'layout.html'%}
+{%block title %}
+    SSIS-Students
+{% endblock %}
+
+
+{% block content %}
+    <div class="add-college-button" id="show-add-college-modal">
+        Add Student
+    </div>
+    <div class="add-college-modal">
+        <form action="" method="post" id="form">
+            <div class="form-row">
+                <label for="add-code">Code:</label>
+                <input type="text" name="add-code" id="a-coll-code">
+            </div>
+            <div class="form-row">
+                <label for="add-collegename">College Name</label>
+                <input type="text" name="add-collegename" id="a-coll-name">
+            </div>
+            <div class="form-row">
+                <div class="cancel-form" onclick="Hide()">Cancel</div>
+                <button type="submit" class="submit-form">Add College</button>
+            </div>
+        </form>
+    </div>
+    <div class="are-you-sure dont-show">
+        <form action="" method="post" id="are-you-sure-form">
+            <p>Are you sure you want to delete this college:<span id="code-span-college"></span> ?</p>
+            <div class="form-row">
+                <div class="cancel-form" onclick="HideQuestion()">No</div>
+                <button type="submit" class="submit-form" >Yes</button>
+            </div>
+        </form>
+    </div>
+        <div class="edit-college-modal">
+        <form action="" method="post" id="form-edit-college">
+            <div class="form-row">
+                <label for="code">Code:</label>
+                <p class="" id="code-p"></p>
+            </div>
+            <div class="form-row">
+                <input type="text" name="edit-collegename" id="college-name-edit-input">
+            </div>
+            <div class="form-row">
+                <div onclick="hideEdit()" class="cancel-form">Cancel</div>
+                <button type="submit" class="submit-form">Edit College</button>
+            </div>
+        </form>
+    </div>
+    <div class="content">
+        <div class="message" id="s-alert-mssg">
+            <p class="success-message" id="success-alt-message">
+                a,sjdhjkasdh
+            </p>
+        </div>
+        <div class="err-message" id="e-alert-mssg">
+            <p class="success-message" id="error-alt-message">
+               
+            </p>
+        </div>
+        <div>
+            <div class="content-college">
+                <div class="college-table" id="college-table">
+                    <div class="college-table-item">Code</div>
+                    <div class="college-table-item">Name</div>
+                    <div class="college-table-item">Edit</div>
+                    <div class="college-table-item">Delete</div>
+                </div>
+
+                    {% for college in colleges %}
+                        <div class="college-table" id="{{college.code}}-block">
+                            <div class="college-table-item">{{ college.code }}</div>
+                            <input type="text" id="college-name-original-{{college.code}}" value="{{college.name}}" hidden>
+                            <div class="college-table-item" id="college-name-{{college.code}}">{{ college.name }}</div>
+                            <div class="college-table-item" id="edit-{{college.code}}" onclick='EditCollege("{{college.code}}", "{{college.name}}")'>Edit</div>
+                            <div class="college-table-item" onclick="Delete('{{ college.code }}')">Delete</div>
+                        </div>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const showModalButton = document.querySelector('#show-add-college-modal');
+    const addCollegeModal = document.querySelector('.add-college-modal')
+    const editCollegeModal = document.querySelector('.edit-college-modal')
+    const delCollegeModal = document.querySelector('.are-you-sure')
+    showModalButton.addEventListener('click',() =>{
+        showModalButton.classList.remove('addStudentButtonIn')
+        addCollegeModal.classList.add('addStudentModalIn')
+        addCollegeModal.classList.remove('addStudentModalOut')
+        showModalButton.classList.add('addStudentButtonOut')    
+        document.querySelector('#nav').style.paddingRight = '50px'
+        hideEdit()
+    })
+    
+    document.addEventListener('click', function(event) {
+        if ((event.target !== addCollegeModal && event.target !== showModalButton  
+        && hasClass(addCollegeModal, 'addStudentModalIn') && !addCollegeModal.contains(event.target))||event.target == document.querySelector('#cancel-form')) {
+            Hide()
+        }
+    });
+
+    
+
+    function hasClass(element, className) {
+    return element.classList.contains(className);
+    }
+
+    function Hide(){
+            addCollegeModal.classList.remove('addStudentModalIn')
+            showModalButton.classList.remove('addStudentButtonOut')
+            addCollegeModal.classList.add('addStudentModalOut')
+            showModalButton.classList.add('addStudentButtonIn')
+            document.querySelector('#nav').style.paddingRight = '400px'
+    }
+    document.querySelector('#form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        Submit()
+    })
+
+    async function Submit() {
+    const code = document.querySelector('#a-coll-code').value;
+    const name = document.querySelector('#a-coll-name').value;
+    if (code.length === 0   || code === ""){
+        AddError('Please enter a code!')
+        return
+    }else if(code.length > 8){
+        AddError("Code is too long")
+        return
+    }else if(name.length === 0 || name === ""){
+        AddError("Please enter a college name!")
+        return
+    }
+    
+    const url = window.origin + '/colleges/addcollege';
+    const data = {
+        code: code.toUpperCase(),
+        collegename: name,
+    };
+    console.log(data);
+    
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+        const res = await response.json();
+        console.log(res);
+        Hide()
+        document.querySelector('#success-alt-message').innerHTML = res.message;
+        document.getElementById('s-alert-mssg').classList.add('messageIn')
+        const newCollege = document.createElement('div')
+        newCollege.classList.add('content-college')
+        newCollege.innerHTML = `
+        <div class="college-table-item">${code}</div>
+        <input type="text" id="college-name-original-${code}" value="${name}" hidden>
+        <div class="college-table-item" id="college-name-${code}">${name}</div>
+        <div class="college-table-item" id="edit-${code}" onclick='EditCollege("${code}", "${name}")'>Edit</div>
+        <div class="college-table-item" onclick="Delete('${code}')">Delete</div>
+        
+        `
+        document.getElementById('college-table').appendChild(newCollege);
+        document.querySelector('#a-coll-code').value = ""
+        document.querySelector('#a-coll-name').value = ""
+        setTimeout(function(){
+            document.getElementById('s-alert-mssg').classList.remove('messageIn')
+            document.getElementById('s-alert-mssg').classList.add('messageOut')
+            setTimeout(function(){
+                document.getElementById('s-alert-mssg').classList.remove('messageOut')
+            },1000)
+        }, 2500)
+    } else {
+        document.getElementById('e-alert-mssg').classList.add('messageIn')
+        addCollegeModal.style.boxShadow = '5px 5px 40px 10px #e8175d'
+        setTimeout(function(){
+            document.getElementById('e-alert-mssg').classList.remove('messageIn')
+            addCollegeModal.classList.remove('Nahhhhhh')
+            document.getElementById('e-alert-mssg').classList.add('messageOut')
+            addCollegeModal.style.boxShadow = '5px 5px 40px 10px #363636'
+            setTimeout(function(){
+                document.getElementById('e-alert-mssg').classList.remove('messageOut')
+            },1000)
+        }, 2500)
+        document.querySelector('#error-alt-message').innerText = `The Code: "${code}" already exists`;
+        console.error('Request failed with status: ' + response.status);
+    }
+}
+
+
+function AddError(message){
+    document.querySelector('#error-alt-message').innerText = `${message}`;
+    document.getElementById('e-alert-mssg').classList.add('messageIn')
+        addCollegeModal.style.boxShadow = '5px 5px 40px 10px #e8175d'
+        setTimeout(function(){
+            document.getElementById('e-alert-mssg').classList.remove('messageIn')
+            addCollegeModal.classList.remove('Nahhhhhh')
+            document.getElementById('e-alert-mssg').classList.add('messageOut')
+            addCollegeModal.style.boxShadow = '5px 5px 40px 10px #363636'
+            setTimeout(function(){
+                document.getElementById('e-alert-mssg').classList.remove('messageOut')
+            },1000)
+        }, 2500)
+}
+
+function EditError(message){
+    document.querySelector('#error-alt-message').innerText = `${message}`;
+    document.getElementById('e-alert-mssg').classList.add('messageIn')
+        editCollegeModal.style.boxShadow = '5px 5px 40px 10px #e8175d'
+        setTimeout(function(){
+            document.getElementById('e-alert-mssg').classList.remove('messageIn')
+            editCollegeModal.classList.remove('Nahhhhhh')
+            document.getElementById('e-alert-mssg').classList.add('messageOut')
+            editCollegeModal.style.boxShadow = '5px 5px 40px 10px #363636'
+            setTimeout(function(){
+                document.getElementById('e-alert-mssg').classList.remove('messageOut')
+            },1000)
+        }, 2500)
+}
+
+function DeleteError(message) {
+    document.querySelector('#error-alt-message').innerText = `${message}`;
+    document.getElementById('e-alert-mssg').classList.add('messageIn')
+    delCollegeModal.style.boxShadow = '5px 5px 40px 10px #e8175d'
+        setTimeout(function(){
+            document.getElementById('e-alert-mssg').classList.remove('messageIn')
+            delCollegeModal.classList.remove('Nahhhhhh')
+            document.getElementById('e-alert-mssg').classList.add('messageOut')
+            delCollegeModal.style.boxShadow = '5px 5px 40px 10px #363636'
+            setTimeout(function(){
+                document.getElementById('e-alert-mssg').classList.remove('messageOut')
+            },1000)
+        }, 2500)
+}
+
+function EditCollege(code, name){
+    if(!hasClass(document.querySelector('.edit-college-modal'), 'active')){
+        console.log('not active')
+        document.querySelector('.edit-college-modal').style.display ='flex';
+        document.querySelector('.edit-college-modal').classList.add('active');
+        document.querySelector('#code-p').innerHTML = code;
+        document.querySelector('#college-name-edit-input').value = name;
+        if(hasClass(document.querySelector('.add-college-modal'), 'add-college-modal addStudentModalIn')){
+            Hide()
+        }
+    }else{
+        console.log('active')
+    }
+
+}
+
+function hideEdit(){
+    document.querySelector('.edit-college-modal').style.display ='none';
+    document.querySelector('.edit-college-modal').classList.remove('active');
+}
+
+document.querySelector('#form-edit-college').addEventListener('submit', async (event)=>{
+    event.preventDefault();
+    const code = document.querySelector('#code-p').innerHTML
+    const name = document.querySelector('#college-name-edit-input').value
+    if(code.length === 0){
+        EditError("code is empty don't inspect the element")
+        return
+    }else if (name.length === 0){
+        EditError("College Name is Empty!")
+        return
+    }else if(document.getElementById(`college-name-original-${code}`).value === name){
+        EditError("Can't Submit nothing's changed!")
+        return
+    }
+    const data={
+        code: code.toUpperCase(),
+        collegename: name,
+    }
+    const url = window.origin + '/colleges/edit';
+    const response = await fetch(url,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+
+    if (response.ok) {
+        const res = await response.json();
+        document.getElementById(`college-name-${code}`).innerHTML = name
+        document.getElementById(`${code}-block`).classList.add('green-light')
+        document.getElementById(`college-name-original-${code}`).value = name
+        document.getElementById(`college-name-original-${code}`).style.color = 'green'
+        hideEdit()
+        setTimeout(()=>{
+            document.getElementById(`${code}-block`).classList.remove('green-light')
+            document.getElementById(`college-name-original-${code}`).style.color = 'var(--white)'
+        },1500)
+    } else {
+        console.error('Request failed with status: ' + response.status);
+    }
+
+
+})
+
+
+function Delete(code){
+    document.querySelector('#code-span-college').innerText = code
+
+    document.querySelector('.are-you-sure').style.display = 'fixed';
+    document.querySelector('.are-you-sure').classList.remove('dont-show');
+    document.querySelector('.are-you-sure').classList.remove('popOut')
+    document.querySelector('.are-you-sure').classList.add('popIn')
+    
+}
+
+document.querySelector('#are-you-sure-form').addEventListener('submit', async (event)=>{
+    event.preventDefault()
+    const code = document.querySelector('#code-span-college').innerText
+    const data = {
+        code : code,
+    }
+    const url = window.origin+'/colleges/delete'
+    const response = await fetch(url,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+
+    
+    if(response.ok){
+        const res = await response.json()
+        //element atong i delete nga div
+        const delElem = document.querySelector(`#${code}-block`)
+        delElem.style.display = 'none'
+        HideQuestion()
+    }else{
+        const res = await response.json()
+        console.error(res.status)
+        DeleteError(res.message)
+        setTimeout(function(){
+            HideQuestion()
+        },1500)
+    }
+})
+
+function HideQuestion(){
+    document.querySelector('.are-you-sure').classList.remove('popIn')
+    document.querySelector('.are-you-sure').classList.add('popOut')
+    document.querySelector('.are-you-sure').style.display = 'none'
+}
+
+
+
+
+
+
+</script>
+{% endblock%}
