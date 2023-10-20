@@ -21,7 +21,7 @@ from app.routes.collegesRoutes import colleges
 from app.routes.coursesRoutes import courses
 
 app.register_blueprint(students, url_prefix='/students')
-app.register_blueprint(courses)
+app.register_blueprint(courses,  url_prefix='/courses')
 app.register_blueprint(colleges, url_prefix='/colleges')
 
 @app.route('/')

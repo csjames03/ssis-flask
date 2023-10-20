@@ -1,6 +1,6 @@
 {% extends 'layout.html'%}
 {%block title %}
-    SSIS-Students
+    SSIS-Colleges
 {% endblock %}
 
 
@@ -50,35 +50,36 @@
     </div>
     <div class="content">
         <div class="message" id="s-alert-mssg">
-            <p class="success-message" id="success-alt-message">
-                a,sjdhjkasdh
-            </p>
+            <p class="success-message" id="success-alt-message"></p>
         </div>
         <div class="err-message" id="e-alert-mssg">
-            <p class="success-message" id="error-alt-message">
-               
-            </p>
+            <p class="success-message" id="error-alt-message">  </p>
         </div>
-        <div>
-            <div class="content-college">
-                <div class="college-table" id="college-table">
-                    <div class="college-table-item">Code</div>
-                    <div class="college-table-item">Name</div>
-                    <div class="college-table-item">Edit</div>
-                    <div class="college-table-item">Delete</div>
-                </div>
+         <!-- -->
+         <div class="scroll-container-4">
+            <div class="scroll-container-4">
+                <div class="scroll-table-4" id="college-table">
+                    <div class="scroll-row-4">
+                        <div class="scroll-cell-4">Cell 1</div>
+                        <div class="scroll-cell-4">Cell 2</div>
+                        <div class="scroll-cell-4">Cell 3</div>
+                        <div class="scroll-cell-4">Cell 4</div>
+                    </div>
 
-                    {% for college in colleges %}
-                        <div class="college-table" id="{{college.code}}-block">
-                            <div class="college-table-item">{{ college.code }}</div>
-                            <input type="text" id="college-name-original-{{college.code}}" value="{{college.name}}" hidden>
-                            <div class="college-table-item" id="college-name-{{college.code}}">{{ college.name }}</div>
-                            <div class="college-table-item" id="edit-{{college.code}}" onclick='EditCollege("{{college.code}}", "{{college.name}}")'>Edit</div>
-                            <div class="college-table-item" onclick="Delete('{{ college.code }}')">Delete</div>
-                        </div>
-                    {% endfor %}
+                {% for college in colleges %}
+                    <div class="scroll-row-4" id="{{college.code}}-block">
+                        <div class="scroll-cell-4">{{ college.code }}</div>
+                        <input type="text" id="college-name-original-{{college.code}}" value="{{college.name}}" hidden>
+                        <div class="scroll-cell-4" id="college-name-{{college.code}}">{{ college.name }}</div>
+                        <div class="scroll-cell-4" " onclick='EditCollege("{{college.code}}", "{{college.name}}")'>Edit</div>
+                        <div class="scroll-cell-4" onclick="Delete('{{ college.code }}')">Delete</div>
+                      </div>
+                {% endfor %}
+                </div>
             </div>
         </div>
+        <!-- -->
+
     </div>
 {% endblock %}
 
@@ -292,8 +293,9 @@ document.querySelector('#form-edit-college').addEventListener('submit', async (e
         const res = await response.json();
         document.getElementById(`college-name-${code}`).innerHTML = name
         document.getElementById(`${code}-block`).classList.add('green-light')
-        document.getElementById(`college-name-original-${code}`).value = name
+        document.getElementById(`college-name-original-${code}`).value = data.collegename
         document.getElementById(`college-name-original-${code}`).style.color = 'green'
+
         hideEdit()
         setTimeout(()=>{
             document.getElementById(`${code}-block`).classList.remove('green-light')

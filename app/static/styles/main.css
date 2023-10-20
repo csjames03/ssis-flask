@@ -47,12 +47,12 @@ nav{
 }
 
 .content{
-
     position: relative;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 40px 20px;
 }
 
 .add-student-button, .add-college-button{
@@ -399,16 +399,6 @@ nav{
     padding: 5px;
     text-align: center;
 }
-.content-college{
-    border: 1px solid #ccc;
-    width: 90%;
-    height: 70%;
-    display: flex;
-    flex-direction: column;
-    gap:2px;
-    overflow-y: scroll;
-    position: relative;
-}
 
 
 #college-name-edit-input{
@@ -417,4 +407,60 @@ nav{
 #form-edit-college{
     width: 100%;
     height: 100%;
+}
+
+
+.scroll-container {
+    width: 100%;
+    height: 100%; 
+    overflow-y: auto;
+   }
+   
+   .scroll-table {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-rows: 50px;
+   }
+   
+   .scroll-row {
+    display: contents;
+   }
+   
+   .scroll-cell {
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-wrap: break-word;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+
+   .scroll-container-4 {
+    width: 100%;
+    height: 75vh; /* Adjust the height as needed */
+    overflow-y: auto;
+   }
+   
+   .scroll-table-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 50px; /* Adjust the row height as needed */
+   }
+   
+   .scroll-row-4 {
+    display: contents;
+   }
+   
+   .scroll-cell-4 {
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-wrap: break-word;
+   }
+
+.head{
+    position: fixed;
+}
+.content{
+    display: flex;
+    flex-direction: column;
 }
