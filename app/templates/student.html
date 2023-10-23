@@ -33,10 +33,9 @@
             </div>
             <div class="form-row">
                 <select name="course" id="inpt-course">
-                    <option value="1">Computer Science</option>
-                    <option value="2">Information Technology</option>
-                    <option value="3">Computer Applications</option>
-                    <option value="4">Information System</option>
+                    {% for course in courses %}
+                    <option value="{{course.code}}">{{course.name}}</option>
+                    {% endfor %}
                 </select>
                 <select name="year" id="inpt-year">
                     <option value="1">1st</option>
@@ -53,8 +52,8 @@
     </div>
     <div class="content">
     <div class="scroll-container">
-        <div class="scroll-table">
-            <div class="scroll-row head">
+        <div class="table">
+            <div class="scroll-table-head">
                 <div class="scroll-cell">Student ID</div>
                 <div class="scroll-cell">Fullname</div>
                 <div class="scroll-cell">Sex</div>
@@ -65,24 +64,21 @@
                 <div class="scroll-cell">Delete</div>
             </div>
         </div>
-    </div>
-        <div class="scroll-container">
-            <div class="scroll-table">
+            <div class="scroll-table" id="student-table">
+            {% for student in students %}
                <div class="scroll-row">
-                {% for student in students %}
                     <div class="scroll-cell">{{student.id}}</div>
-                    <div class="scroll-cell">{{student.fname}} {{student.lname}}</div>
+                    <div class="scroll-cell">{{student.firstname}} {{student.lastname}}</div>
                     <div class="scroll-cell">{{student.gender}}</div>
                     <div class="scroll-cell">{{student.birthdate}}</div>
                     <div class="scroll-cell">{{student.year}}</div>
                     <div class="scroll-cell">{{student.course_code}}</div>
                     <div class="scroll-cell">Edit</div>
                     <div class="scroll-cell">Delete</div>
-                 {% endfor %}
                </div>
-               <!-- Add more rows as needed -->
+            {% endfor %}
             </div>
-           </div>
+        </div>
         <div class="message" id="s-alert-mssg">
             <p class="success-message" id="success-alt-message">
                 a,sjdhjkasdh
@@ -90,7 +86,6 @@
         </div>
         <div class="err-message" id="e-alert-mssg">
             <p class="success-message">
-                a,sjdhjkasdh
             </p>
         </div>
     </div>
@@ -141,8 +136,32 @@
     const email = document.querySelector('#inpt-email').value;
     const course = document.querySelector('#inpt-course').value;
     const year = document.querySelector('#inpt-year').value;
-    
-    const url = window.origin + '/addstudent';
+    const studentid =  id.split('-')
+
+    if(studentid.length !== 2 || studentid[0].length !== 4 ||studentid[1].length !== 4){
+        AddError('Student ID is not in the correct format!')
+        return
+    }else if(id.length === 0) {
+        AddError("Can't leave the id input empty")
+        return
+    }else if(fname.length === 0)  {
+        AddError("Can't leave the firstname input empty")
+        return
+    }else if(lname.length === 0) {
+        AddError("Can't leave the lastname input empty")
+        return
+    }else if(mname.length === 0) {
+        AddError("Can't leave the middlename input empty")
+        return
+    }else if(email.length === 0) {
+        AddError("Don't forget to add your email address")
+        return
+    }else if(date.length === 0) {
+        AddError("Don't forget to add your birthdate")
+        return
+    }
+
+    const url = window.origin + '/students/addstudent';
     const data = {
         id: id,
         fname: fname,
@@ -165,9 +184,27 @@
 
     if (response.ok) {
         const res = await response.json();
-        console.log(res);
         Hide()
-        document.querySelector('#success-alt-message').innerHTML = res.message;
+        const container = document.querySelector('#student-table')
+        const div = document.createElement('div');
+        div.classList.add('scroll-row');
+        div.innerHTML = `
+                    <div class="scroll-cell">${data.id}</div>
+                    <div class="scroll-cell">${data.fname} ${data.lname} </div>
+                    <div class="scroll-cell">${data.sex}</div>
+                    <div class="scroll-cell">${data.date}</div>
+                    <div class="scroll-cell">${data.year}</div>
+                    <div class="scroll-cell"> ${data.course}</div>
+                    <div class="scroll-cell">Edit</div>
+                    <div class="scroll-cell">Delete</div>
+        `
+        container.appendChild(div)
+        document.querySelector('#inpt-id').value = ''
+        document.querySelector('#inpt-fname').value = ''
+        document.querySelector('#inpt-mname').value = ''
+        document.querySelector('#inpt-lname').value = ''
+        document.querySelector('#inpt-email').value =''
+        document.querySelector('.success-message').innerText = res.message;
         document.getElementById('s-alert-mssg').classList.add('messageIn')
         setTimeout(function(){
             document.getElementById('s-alert-mssg').classList.remove('messageIn')
@@ -177,7 +214,17 @@
             },1000)
         }, 2500)
     } else {
-        document.getElementById('e-alert-mssg').classList.add('messageIn')
+        const res = await response.json();
+        AddError(res.message)
+        console.error('Request failed with status: ' + response.status);
+    }
+}
+
+
+
+function AddError(message){
+    document.querySelector('#e-alert-mssg').innerHTML = `${message}`;
+    document.getElementById('e-alert-mssg').classList.add('messageIn')
         addStudentModal.style.boxShadow = '5px 5px 40px 10px #e8175d'
         setTimeout(function(){
             document.getElementById('e-alert-mssg').classList.remove('messageIn')
@@ -188,15 +235,7 @@
                 document.getElementById('e-alert-mssg').classList.remove('messageOut')
             },1000)
         }, 2500)
-        console.error('Request failed with status: ' + response.status);
     }
-}
-
-
-function errorForm(){
-
-}
-
 
 
 

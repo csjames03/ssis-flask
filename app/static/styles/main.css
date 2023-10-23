@@ -78,9 +78,9 @@ nav{
 
 .add-student-modal{
     width: 40vw;
-    display: fixed;
-    top: 50%;
-    right: 50%;
+    display: absolute;
+    top: 20%;
+    left: 0%;
     height: 80vh;
     padding: 20px;
     background-color: var(--metal);
@@ -411,12 +411,31 @@ nav{
 
 
 .scroll-container {
-    width: 100%;
-    height: 100%; 
+    width: 80%;
+    height: 80vh; 
     overflow-y: auto;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+   }
+
+   .scroll-table-head{
+    width: 100%;
+    height: 50px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-rows: 50px;
+    position: absolute;
+    top: 0;
+    background-color: #363636;
+    z-index: 2;
    }
    
    .scroll-table {
+    margin-top: 50px;
+    width: 100%;
+    height: 85%;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-auto-rows: 50px;
@@ -424,10 +443,10 @@ nav{
    
    .scroll-row {
     display: contents;
+    border: 1px solid #ccc;
    }
    
    .scroll-cell {
-    border: 1px solid #ccc;
     padding: 10px;
     overflow-wrap: break-word;
     display: flex;
