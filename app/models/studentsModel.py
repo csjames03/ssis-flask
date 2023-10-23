@@ -16,6 +16,16 @@ class Students:
         except: 
             return False
         
+    def delete_student(self, id):
+        cursor = mysql.new_cursor()
+        try:
+            cursor.execute("DELETE FROM student WHERE id = %s", (id,))
+            mysql.connection.commit()
+            return True
+        except:
+            return False
+
+        
     def id_is_unique(self, id):
         cursor = mysql.new_cursor()
         cursor.execute("SELECT * FROM student where id = %s", (id,))
@@ -24,5 +34,6 @@ class Students:
             return False
         else: 
             return True
+        
 
         

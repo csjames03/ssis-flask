@@ -50,6 +50,11 @@
             </div>
         </form>
     </div>
+    <div class="delete-student-q">
+        <p>Are you sure to delete this student with an id of <span id="id-to-be-deleted"></span></p>
+        <div class="cancel-delete-student cancel-form" onclick="HideThis('delete-student-q')">Cancel</div>
+        <div class="delete-student submit-form"  id="delete-stud" onclick="DeleteStudent()">Delete</div>
+    </div>
     <div class="content">
     <div class="scroll-container">
         <div class="table">
@@ -67,14 +72,14 @@
             <div class="scroll-table" id="student-table">
             {% for student in students %}
                <div class="scroll-row">
-                    <div class="scroll-cell">{{student.id}}</div>
+                    <div class="scroll-cell" id="student-{{student.id}}">{{student.id}}</div>
                     <div class="scroll-cell">{{student.firstname}} {{student.lastname}}</div>
                     <div class="scroll-cell">{{student.gender}}</div>
                     <div class="scroll-cell">{{student.birthdate}}</div>
                     <div class="scroll-cell">{{student.year}}</div>
                     <div class="scroll-cell">{{student.course_code}}</div>
                     <div class="scroll-cell">Edit</div>
-                    <div class="scroll-cell">Delete</div>
+                    <div class="scroll-cell" onclick="Delete(`{{student.id}}`)">Delete</div>
                </div>
             {% endfor %}
             </div>
@@ -237,8 +242,55 @@ function AddError(message){
         }, 2500)
     }
 
+function Delete(id){
+    document.querySelector("#id-to-be-deleted").innerText = id
+    document.querySelector(".delete-student-q").style.display = 'flex'
 
+    //add-student-modal addStudentModalIn
+    if(hasClass(addStudentModal, 'addStudentModalIn')){
+        Hide()
+    }
 
+}
+
+async function DeleteStudent(){
+    const id = document.querySelector("#id-to-be-deleted").innerText 
+    console.log('Delete this student with an id of:' + id)
+    const url = window.origin + '/students/deletestudent'
+
+    const data  = {
+        id: id,
+    }
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+
+    if(response.ok){
+        const res = await response.json();
+        document.querySelector('.success-message').innerText = res.message;
+        document.getElementById('s-alert-mssg').classList.add('messageIn')
+        setTimeout(function(){
+            document.getElementById('s-alert-mssg').classList.remove('messageIn')
+            document.getElementById('s-alert-mssg').classList.add('messageOut')
+            setTimeout(function(){
+                document.getElementById('s-alert-mssg').classList.remove('messageOut')
+            },1000)
+        }, 2500)
+    }else {
+        const res = await response.json();
+        AddError(res.message)
+        console.error('Request failed with status: ' + response.status);
+    }
+}
+
+function HideThis(element){
+    document.querySelector(`.${element}`).style.display = 'none'
+}
 
 
 </script>

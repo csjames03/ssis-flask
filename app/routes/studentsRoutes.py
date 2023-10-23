@@ -40,4 +40,12 @@ def add_student():
     else :
         return {'message': 'Unfortunately student was not added successfully'}, 400
 
-# Add more routes related to students here if needed
+@students.route('/deletestudent', methods=['POST'])
+def delete_student():
+    data = request.get_json()
+    student_id = data.get('id')
+    delete_student = students_model.delete_student(student_id)
+    if delete_student:
+        return {'message': 'Student  deleted successfully'}, 200
+    else:
+        return {'message': 'Unfortunately student was not deleted successfully'}, 400
