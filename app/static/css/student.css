@@ -21,8 +21,55 @@
     transition: 0.3s;
     gap: 20px;
     width: 80%;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.student-info-container p{
+    text-wrap: nowrap;
 }
    
-.container:hover{
+.student-info-container:hover{
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.student-avatar{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.student-action{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    top: -20%;
+    right: 0%;
+}
+
+.student-action div{
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.student-action div img{
+    width: auto;
+    height: 15px;
+}
+
+.edit-icon-student-container{
+    background-color: var(--green);
+}
+.delete-icon-student-container{
+    background-color: var(--red);
 }

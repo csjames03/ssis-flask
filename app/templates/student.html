@@ -2,111 +2,23 @@
 
 {% block content %}
     <div class="student-main-container">
-        <div class="student-info-container">
-            <h2>John Doe</h2>
-            <p>Student Profile: Great at Mathematics</p>
-            <p>Student Gender: Male</p>
-            <p>Year Level: 2</p>
-            <p>Last Course: Calculus</p>
-        </div>
-           
-        <div class="student-info-container">
-            <h2>Jane Smith</h2>
-            <p>Student Profile: Great at Literature</p>
-            <p>Student Gender: Female</p>
-            <p>Year Level: 3</p>
-            <p>Last Course: English Literature</p>
-        </div>
-        <div class="student-info-container">
-            <h2>John Doe</h2>
-            <p>Student Profile: Great at Mathematics</p>
-            <p>Student Gender: Male</p>
-            <p>Year Level: 2</p>
-            <p>Last Course: Calculus</p>
-        </div>
-           
-        <div class="student-info-container">
-            <h2>Jane Smith</h2>
-            <p>Student Profile: Great at Literature</p>
-            <p>Student Gender: Female</p>
-            <p>Year Level: 3</p>
-            <p>Last Course: English Literature</p>
-        </div>
-        <div class="student-info-container">
-            <h2>John Doe</h2>
-            <p>Student Profile: Great at Mathematics</p>
-            <p>Student Gender: Male</p>
-            <p>Year Level: 2</p>
-            <p>Last Course: Calculus</p>
-        </div>
-           
-        <div class="student-info-container">
-            <h2>Jane Smith</h2>
-            <p>Student Profile: Great at Literature</p>
-            <p>Student Gender: Female</p>
-            <p>Year Level: 3</p>
-            <p>Last Course: English Literature</p>
-        </div>
-        <div class="student-info-container">
-            <h2>John Doe</h2>
-            <p>Student Profile: Great at Mathematics</p>
-            <p>Student Gender: Male</p>
-            <p>Year Level: 2</p>
-            <p>Last Course: Calculus</p>
-        </div>
-           
-        <div class="student-info-container">
-            <h2>Jane Smith</h2>
-            <p>Student Profile: Great at Literature</p>
-            <p>Student Gender: Female</p>
-            <p>Year Level: 3</p>
-            <p>Last Course: English Literature</p>
-        </div>
-        <div class="student-info-container">
-            <h2>John Doe</h2>
-            <p>Student Profile: Great at Mathematics</p>
-            <p>Student Gender: Male</p>
-            <p>Year Level: 2</p>
-            <p>Last Course: Calculus</p>
-        </div>
-           
-        <div class="student-info-container">
-            <h2>Jane Smith</h2>
-            <p>Student Profile: Great at Literature</p>
-            <p>Student Gender: Female</p>
-            <p>Year Level: 3</p>
-            <p>Last Course: English Literature</p>
-        </div>
 
         <div class="student-info-container">
-            <h2>John Doe</h2>
-            <p>Student Profile: Great at Mathematics</p>
-            <p>Student Gender: Male</p>
-            <p>Year Level: 2</p>
-            <p>Last Course: Calculus</p>
+            <img class="student-avatar" src="https://images.unsplash.com/photo-1552058544-f2b08422138a?q=80&w=1899&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+            <p>James Ocao</p>
+            <p>Male</p>
+            <p>2nd Year</p>
+            <p>BS in Computer Science</p>
+            <div class="student-action">
+                <div class="edit-icon-student-container">
+                    <img src="{{url_for('static', filename='images/editIcon.png')}}" alt="Edit Icon">
+                </div>
+                <div class="delete-icon-student-container">
+                    <img src="{{url_for('static', filename='images/deleteIcon.png')}}" alt="Delete Icon">
+                </div>
+            </div>
         </div>
-           
-        <div class="student-info-container">
-            <h2>Jane Smith</h2>
-            <p>Student Profile: Great at Literature</p>
-            <p>Student Gender: Female</p>
-            <p>Year Level: 3</p>
-            <p>Last Course: English Literature</p>
-        </div>
-        <div class="student-info-container">
-            <h2>John Doe</h2>
-            <p>Student Profile: Great at Mathematics</p>
-            <p>Student Gender: Male</p>
-            <p>Year Level: 2</p>
-            <p>Last Course: Calculus</p>
-        </div>
-           
-        <div class="student-info-container">
-            <h2>Jane Smith</h2>
-            <p>Student Profile: Great at Literature</p>
-            <p>Student Gender: Female</p>
-            <p>Year Level: 3</p>
-            <p>Last Course: English Literature</p>
-        </div>
+
+        
     </div>
 {% endblock %}
