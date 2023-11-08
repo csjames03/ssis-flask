@@ -9,6 +9,8 @@ nav{
     font-size: 15px;
     padding: 0px 50px;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
 }
 
 nav a{

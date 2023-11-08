@@ -1,0 +1,28 @@
+.student-main-container{
+    width: 60vw;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.student-info-container{
+    padding: 10px;
+    margin: 10px;
+    display: grid;
+    height: 70px;
+    border-radius: 10px;
+    grid-template-columns: repeat(5, 1fr); /* Create 5 equal columns */
+    gap: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    gap: 20px;
+    width: 80%;
+}
+   
+.container:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}

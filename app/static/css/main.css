@@ -16,4 +16,12 @@
     text-decoration: none;
 }
 
+body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 60px;
+    justify-content: center;
+    align-items: center;
+}
 
