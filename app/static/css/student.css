@@ -73,3 +73,115 @@
 .delete-icon-student-container{
     background-color: var(--red);
 }
+
+.add-student-modal-container{
+    height: 75vh;
+    width: 45vw;
+    position: fixed;
+    top: 10%;
+    right: 25%;
+    background-color: white;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    padding: 20px 50px;
+}
+
+.add-student-modal-container p{
+    font-size: 30px;
+    font-weight: bolder;
+}
+.add-student-modal-row-input-container{
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+.add-student-modal-row-input-container div{
+    display: flex;
+    gap: 30px;
+    width: 50%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#student_id_add, 
+#student_email_add{
+    width: 100%;
+    padding: 5px 10px;
+}
+#first_name_add, #last_name_add, #middle_name_add{
+    width: 50%;
+    padding: 5px 10px;
+}
+
+#year_level_add, #course_add{
+    padding: 5px 10px; 
+}
+
+#gender_add_div{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+#year_add_div, #course_add_div{
+    display: flex;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: .5px;
+
+}
+
+#year_add_div label, #course_add_div label, 
+#gender_add_div p, #gender_add_div label{
+    font-size: 12px;
+}
+
+#year_add_div select, #course_add_div select{
+    width: 100%;
+}
+
+#add_student_cancel_button, #add_student_submit_button{
+    width: 100%;
+    padding: 10px 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin: 5px;
+    color: var(--white);
+    cursor: pointer;
+}
+
+#add_student_cancel_button{
+    background-color: var(--red);
+}
+#add_student_submit_button{
+    background-color: var(--green);
+    border: none;
+}
+
+.add-student-close{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--red);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -2.5%;
+    right: -2%;
+    cursor: pointer;
+}
+
+.add-student-close img{
+    width: 30px;
+    height: 30px; 
+}

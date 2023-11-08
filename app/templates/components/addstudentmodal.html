@@ -1,0 +1,55 @@
+<form class="add-student-modal-container">
+    <p>Add Student Modal</p>
+    <div>
+        <div class="add-student-modal-row-input-container">
+            <input type="text" name="student_id" id="student_id_add">
+        </div>
+        
+        <div class="add-student-modal-row-input-container">
+            <input type="text" name="first_name" id="first_name_add">
+            <input type="text" name="last_name" id="last_name_add">
+        </div>
+        
+        <div class="add-student-modal-row-input-container">
+            <input type="text" name="middle_name" id="middle_name_add">
+            <div id="gender_add_div">
+                <p>Gender: </p>
+                <input type="radio" id="student-gender-input" name="student_gender" value="Male">
+                <label for="html">Male</label><br>
+                <input type="radio" id="student-gender-input" name="student_gender" value="Female">
+                <label for="css">Female</label><br>
+            </div>
+        </div>
+
+        <div class="add-student-modal-row-input-container">
+            <div id="year_add_div">
+                <label for="year_level">Year: </label>
+                <select name="year_level" id="year_level_add" >
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+            </div>
+            <div id="course_add_div">
+                <label for="course">Course: </label>
+                <select name="course" id="course_add">
+                    <option value="BSCS">Computer Science</option>
+                    <option value="BSCS">Computer Science</option>
+                    <option value="BSCS">Computer Science</option>
+                    <option value="BSCS">Computer Science</option>
+                </select>
+            </div>
+        </div>
+        <div class="add-student-modal-row-input-container">
+            <input type="text" name="student_email" id="student_email_add">
+        </div>
+        <div class="add-student-modal-row-input-container">
+            <input type="submit" value="Submit" id="add_student_submit_button">
+            <div id="add_student_cancel_button">Cancel</div>
+        </div>
+        <div class="add-student-close">
+            <img src="{{url_for('static', filename='images/closeIcon.png')}}" alt="Edit Icon">
+        </div>
+    </div>
+</form>
