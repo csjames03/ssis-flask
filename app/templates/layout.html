@@ -8,7 +8,10 @@
     {% include 'components/style.html'%}
 </head>
 <body>
-    {% block content %} {% endblock %}
+    {% include 'components/navigationbar.html'%}
+    {% block content %}
+
+    {% endblock %}
 
     {% include 'components/scripts.html'%}
 </body>

@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&family=Open+Sans:wght@400&family=Roboto:wght@100&display=swap');
+:root{
+    --white: #fff;
+    --green: #198754;
+    --dark-blue: #012970;
+    --red: #DC3545;
+    --light-blue: #4154F1;
+}
+
+*{
+    font-family: 'Open Sans', sans-serif;
+    color: var(--dark-blue);
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+

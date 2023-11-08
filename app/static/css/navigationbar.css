@@ -1,0 +1,38 @@
+nav{
+    background-color: var(--white);
+    display: flex;
+    width: 100vw;
+    height: 60px;
+    max-height: 60px;
+    box-shadow: 0 4px 16px rgba(0, 32, 51, 0.12);
+    font-weight: bolder;
+    font-size: 15px;
+    padding: 0px 50px;
+    justify-content: space-between;
+}
+
+nav a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav div{
+    width: 90%;
+    height: 100%;
+    display: flex;
+}
+
+nav div div{
+    width: 50%;
+    height: 100%;
+    padding: 5px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-buttons a:hover{
+    color: var(--light-blue);
+}
