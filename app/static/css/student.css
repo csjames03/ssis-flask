@@ -67,6 +67,7 @@
     height: 15px;
 }
 
+
 .edit-icon-student-container{
     background-color: var(--green);
 }
@@ -74,12 +75,11 @@
     background-color: var(--red);
 }
 
+.edit-student-modal-container,
 .add-student-modal-container{
     height: 75vh;
     width: 45vw;
     position: fixed;
-    top: 10%;
-    right: 25%;
     background-color: white;
     z-index: 20;
     display: flex;
@@ -89,11 +89,12 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     padding: 20px 50px;
 }
-
+.edit-student-modal-container p,
 .add-student-modal-container p{
     font-size: 30px;
     font-weight: bolder;
 }
+.edit-student-modal-row-input-container,
 .add-student-modal-row-input-container{
     display: flex;
     width: 100%;
@@ -101,7 +102,7 @@
     margin-bottom: 30px;
 }
 
-
+.edit-student-modal-row-input-container div,
 .add-student-modal-row-input-container div{
     display: flex;
     gap: 30px;
@@ -109,27 +110,31 @@
     justify-content: flex-start;
     align-items: center;
 }
-
+#student_id_edit, 
+#student_email_edit,
 #student_id_add, 
 #student_email_add{
     width: 100%;
     padding: 5px 10px;
 }
+#first_name_edit, #last_name_edit, #middle_name_edit,
 #first_name_add, #last_name_add, #middle_name_add{
     width: 50%;
     padding: 5px 10px;
 }
-
+#year_level_edits, #course_edit,
 #year_level_add, #course_add{
     padding: 5px 10px; 
 }
 
+#gender_edit_div,
 #gender_add_div{
     display: flex;
     justify-content: center;
     gap: 5px;
 }
 
+#year_edit_div, #course_edit_div,
 #year_add_div, #course_add_div{
     display: flex;
     display: flex;
@@ -139,15 +144,19 @@
 
 }
 
+#year_edit_div label, #course_edit_div label, 
+#gender_edit_div p, #gender_edit_div label,
 #year_add_div label, #course_add_div label, 
 #gender_add_div p, #gender_add_div label{
     font-size: 12px;
 }
 
+#year_edit_div select, #course_edit_div select,
 #year_add_div select, #course_add_div select{
     width: 100%;
 }
 
+#edit_student_cancel_button, #edit_student_submit_button,
 #add_student_cancel_button, #add_student_submit_button{
     width: 100%;
     padding: 10px 15px;
@@ -158,15 +167,16 @@
     color: var(--white);
     cursor: pointer;
 }
-
+#edit_student_cancel_button,
 #add_student_cancel_button{
     background-color: var(--red);
 }
+#edit_student_submit_button,
 #add_student_submit_button{
     background-color: var(--green);
     border: none;
 }
-
+.edit-student-close,
 .add-student-close{
     position: absolute;
     width: 30px;
@@ -184,4 +194,23 @@
 .add-student-close img{
     width: 30px;
     height: 30px; 
+}
+
+.add-student-modal-button{
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background-color: var(--green);
+    right: -1%;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.add-student-modal-button:hover{
+    padding: 10px 40px;
+    transition-duration: 250ms;
+    transition-timing-function: ease-out;
 }

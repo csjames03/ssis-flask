@@ -1,0 +1,55 @@
+<form class="edit-student-modal-container" id="edit-student-modal-container">
+    <p>Edit Student Modal</p>
+    <div>
+        <div class="edit-student-modal-row-input-container">
+            <input type="text" name="student_id" id="student_id_edit">
+        </div>
+        
+        <div class="edit-student-modal-row-input-container">
+            <input type="text" name="first_name" id="first_name_edit">
+            <input type="text" name="last_name" id="last_name_edit">
+        </div>
+        
+        <div class="edit-student-modal-row-input-container">
+            <input type="text" name="middle_name" id="middle_name_edit">
+            <div id="gender_add_div">
+                <p>Gender: </p>
+                <input type="radio" id="student-gender-input" name="student_gender" value="Male">
+                <label for="html">Male</label><br>
+                <input type="radio" id="student-gender-input" name="student_gender" value="Female">
+                <label for="css">Female</label><br>
+            </div>
+        </div>
+
+        <div class="edit-student-modal-row-input-container">
+            <div id="year_edit_div">
+                <label for="year_level">Year: </label>
+                <select name="year_level" id="year_level_edit" >
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+            </div>
+            <div id="course_edit_div">
+                <label for="course">Course: </label>
+                <select name="course" id="course_edit">
+                    <option value="BSCS">Computer Science</option>
+                    <option value="BSCS">Computer Science</option>
+                    <option value="BSCS">Computer Science</option>
+                    <option value="BSCS">Computer Science</option>
+                </select>
+            </div>
+        </div>
+        <div class="edit-student-modal-row-input-container">
+            <input type="text" name="student_email" id="student_email_edit">
+        </div>
+        <div class="edit-student-modal-row-input-container">
+            <input type="submit" value="Submit" id="edit_student_submit_button">
+            <div id="edit_student_cancel_button">Cancel</div>
+        </div>
+        <div class="edit-student-close">
+            <img src="{{url_for('static', filename='images/closeIcon.png')}}" alt="Edit Icon">
+        </div>
+    </div>
+</form>

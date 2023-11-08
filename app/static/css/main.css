@@ -25,3 +25,98 @@ body{
     align-items: center;
 }
 
+.hide-modal{
+    animation-name: HideModal;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;  
+}
+
+.show-modal{
+    animation-name: ShowModal;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;  
+}
+
+
+
+.add-box-shadow-red{
+    box-shadow: 0 8px 16px 0 var(--red);
+}
+
+.error{
+    background-color: var(--red);
+}
+
+.success{
+    background-color: var(--green);
+}
+
+.error, .success{
+    width: 450px;
+    height: 125px;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-wrap: nowrap;
+    z-index: 50;
+    position: fixed;
+    bottom: 5%;
+    left: -100%;
+    border-radius: 10px;
+    color: var(--white);
+}
+
+.show-message{
+    animation-name: SlideIn;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;  
+}
+
+.hide-message{
+    animation-name: SlideOut;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;  
+}
+
+@keyframes SlideIn {
+    0% {
+        top: 140%;
+        left: -100%;
+    }
+    100% {
+        left: 0%;
+    }
+}
+
+@keyframes SlideOut {
+    0% {
+        left: 0%;
+    }
+    100% {
+        top: 140%;
+        left: -100%;
+    }
+}
+
+@keyframes ShowModal {
+    0% {
+        top: 140%;
+        right: -140%;
+    }
+    100% {
+        top: 10%;
+        right: 25%;
+    }
+}
+
+@keyframes HideModal {
+    0% {
+        top: 10%;
+        right: 25%;
+    }
+    100% {
+        top: 140%;
+        right: -140%;
+    }
+}
