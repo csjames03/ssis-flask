@@ -3,22 +3,27 @@
 {% block content %}
     <div class="student-main-container">
 
-        <div class="student-info-container">
-            <img class="student-avatar" src="https://images.unsplash.com/photo-1552058544-f2b08422138a?q=80&w=1899&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-            <p>James Ocao</p>
-            <p>Male</p>
-            <p>2nd Year</p>
-            <p>BS in Computer Science</p>
-            <div class="student-action">
-                <div class="edit-icon-student-container">
-                    <img src="{{url_for('static', filename='images/editIcon.png')}}" alt="Edit Icon">
-                </div>
-                <div class="delete-icon-student-container">
-                    <img src="{{url_for('static', filename='images/deleteIcon.png')}}" alt="Delete Icon">
+
+        {% for student in students %}
+
+            <div class="student-info-container">
+                <img class="student-avatar" src="https://images.unsplash.com/photo-1552058544-f2b08422138a?q=80&w=1899&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                <p>{{student.first_name}} {{student.last_name}}</p>
+                <p>{{ student.sex }}</p>
+                <p>{{ student.year_level }}</p>
+                <p>{{ student.course_code }}</p>
+                <div class="student-action">
+                    <div class="edit-icon-student-container">
+                        <img src="{{url_for('static', filename='images/editIcon.png')}}" alt="Edit Icon">
+                    </div>
+                    <div class="delete-icon-student-container">
+                        <img src="{{url_for('static', filename='images/deleteIcon.png')}}" alt="Delete Icon">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        
+        {% endfor%}
+
+
     </div>
 {% endblock %}
