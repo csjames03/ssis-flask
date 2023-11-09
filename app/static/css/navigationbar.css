@@ -38,3 +38,8 @@ nav div div{
 .navbar-buttons a:hover{
     color: var(--light-blue);
 }
+
+nav div div input{
+    padding: 5px 10px;
+    width: 50%;
+}
