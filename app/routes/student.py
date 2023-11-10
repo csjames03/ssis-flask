@@ -1,17 +1,20 @@
 from flask import Blueprint, render_template, request, jsonify
 from app.models.student import Students
+from app.models.course import Courses
 
 students = Blueprint(
     "students", __name__, static_folder="static", template_folder="templates"
 )
 
 students_model = Students()
+courses_model = Courses()
 
 
 @students.route("/")
 def show_students():
     students = students_model.get_students()
-    return render_template("student.html", students=students)
+    courses = courses_model.get_courses()
+    return render_template("student.html", students=students, courses=courses)
 
 
 @students.route("/add", methods=["POST"])

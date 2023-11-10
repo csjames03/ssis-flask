@@ -33,10 +33,9 @@
             <div id="course_edit_div">
                 <label for="course">Course: </label>
                 <select name="course" id="course_edit">
-                    <option value="BSCS">Computer Science</option>
-                    <option value="BSCA">Computer Application</option>
-                    <option value="BSIT">Information Technology</option>
-                    <option value="BSIS">Information System</option>
+                    {%for course in courses:%}
+                        <option value="{{course.course_code}}">{{course.course_name}}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
