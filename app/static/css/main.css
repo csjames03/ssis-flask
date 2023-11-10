@@ -79,6 +79,13 @@ body{
     animation-fill-mode: forwards;  
 }
 
+
+.error-p, .success-p{
+    color: var(--white);
+    font-size: 15px;
+    font-weight: bold;
+}
+
 @keyframes SlideIn {
     0% {
         top: 140%;

@@ -29,6 +29,7 @@ window.addEventListener('DOMContentLoaded',()=>{
             console.log('Student ID is not in the correct format!')
             ModalError('add-student-modal-container')
             Error('Student ID is not in the correct format!')
+            return 
         }else if(firstname.value.length === 0){
             console.log('First name is empty!')
             ModalError('add-student-modal-container')
@@ -45,14 +46,14 @@ window.addEventListener('DOMContentLoaded',()=>{
             return
         }
          
-        const url = window.origin+'/student/add'
+        const url = window.origin+'/students/add'
         const data = {
             student_id: studentIdWithoutSpaces,
             first_name: firstname.value,
-            lastname: lastname.value,
+            last_name: lastname.value,
             gender: gender,
             year_level: yearlevel.value,
-            course: course.value,
+            course_code: course.value,
           };
         const response = await fetch(url, {
             method: 'POST',
@@ -63,10 +64,16 @@ window.addEventListener('DOMContentLoaded',()=>{
         if(response.ok){
             const res = await response.json()
             console.log(res)
+            ModalSuccess()
+            Success(res.message)
+            AppendStudentCard(data.student_id, data.first_name, data.last_name, data.gender, data.year_level, data.course_code)
+            return
         }
         
         const res = await response.json()
-        console.log(res)
+        ModalError('add-student-modal-container')
+        Error(res.message)
+        return  
         
     })
 
@@ -103,12 +110,34 @@ window.addEventListener('DOMContentLoaded',()=>{
         }, 1500)
     }
 
+    function ModalSuccess(){
+        HideModal('add-student-modal-container')
+        addStudentButton.style.right = '-1%';
+        const studentId =  document.querySelector('#student_id_add')
+        const firstname =  document.querySelector('#first_name_add')
+        const lastname =  document.querySelector('#last_name_add')
+        studentId.value = ""
+        firstname.value = ""
+        lastname.value = ""
+    }
     function Error(message){
         document.querySelector(`.error`).classList.remove('hide-message')
+        document.querySelector('.error-p').innerText = message
         document.querySelector(`.error`).classList.add('show-message')
         setTimeout(()=>{
             document.querySelector(`.error`).classList.remove('show-message')
             document.querySelector(`.error`).classList.add('hide-message')
+            
+        },1500)
+    }
+    function Success(message){
+        document.querySelector(`.success`).classList.remove('hide-message')
+        document.querySelector('.success-p').innerText = message
+        document.querySelector(`.success`).classList.add('show-message')
+        setTimeout(()=>{
+            document.querySelector(`.success`).classList.remove('show-message')
+            document.querySelector(`.success`).classList.add('hide-message')
+            
         },1500)
     }
 
@@ -125,6 +154,32 @@ window.addEventListener('DOMContentLoaded',()=>{
         return null;
       }
       
-      
+    function AppendStudentCard(id, fname, lname, gender, year, course){
+        const div = document.createElement('div')
+        const container = document.querySelector('.student-main-container')
+        div.id = `student-info-container-${id}`
+        div.classList.add('student-info-container')
+        div.innerHTML =`
+                    ${ gender === 'Male' ?
+                    (`<img class="student-avatar" src="/static/images/boy.png" alt="Boy Icon">}`):(`
+                        <img class="student-avatar" src="/static/images/girl.png" alt="Girl Icon">  
+                    `)}
+                    <p>${fname}${lname}</p>
+                    <p>${gender}</p>
+                    <p>${year}</p>
+                    <p>${course}</p>
+                    <div class="student-action">
+                        <div class="edit-icon-student-container">
+                            <img src="/static/images/editIcon.png" alt="Edit Icon">
+                        </div>
+                        <div class="delete-icon-student-container">
+                            <img src="/static/images/deleteIcon.png" alt="Delete Icon">
+
+                        </div>
+                    </div>
+        `
+        container.appendChild(div)
+
+    }
       
 })
