@@ -43,6 +43,22 @@ def initialize_database():
             sex VARCHAR(10) NOT NULL,
             FOREIGN KEY (course_code) REFERENCES course(course_code) ON DELETE CASCADE ON UPDATE CASCADE
         );
+
+        INSERT INTO college (college_code, college_name) VALUES
+        ('CCS', 'College of Computer Studies'),
+        ('CON', 'College of Nursing'),
+        ('CED', 'College of Education'),
+        ('COE', 'College of Engineering'),
+        ('CASS', 'College of Arts and Social Sciences');
+
+
+        INSERT INTO course (course_code, course_name, college_code) VALUES
+        ('BSCS', 'Computer Science', 'CCS'),
+        ('BSCA', 'Computer Applications', 'CCS'),
+        ('BSIT', 'Information Technology', 'CCS'),
+        ('BSIS', 'Information System', 'CCS');
+
+
         """
 
         # Execute the SQL script as separate statements
