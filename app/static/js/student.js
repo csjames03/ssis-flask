@@ -164,6 +164,7 @@ window.addEventListener('DOMContentLoaded',()=>{
                     (`<img class="student-avatar" src="/static/images/boy.png" alt="Boy Icon">}`):(`
                         <img class="student-avatar" src="/static/images/girl.png" alt="Girl Icon">  
                     `)}
+                    
                     <p>${fname}${lname}</p>
                     <p>${gender}</p>
                     <p>${year}</p>
