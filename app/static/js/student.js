@@ -63,6 +63,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             ModalSuccess()
             Success(res.message)
             AppendStudentCard(data.student_id, data.first_name, data.last_name, data.gender, data.year_level, data.course_code)
+            StudentEditInfoGetter()
             return
         }
         
@@ -155,7 +156,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         div.classList.add('student-info-container')
         div.innerHTML =`
                     ${ gender === 'Male' ?
-                    (`<img class="student-avatar" src="/static/images/boy.png" alt="Boy Icon">}`):(`
+                    (`<img class="student-avatar" src="/static/images/boy.png" alt="Boy Icon">`):(`
                         <img class="student-avatar" src="/static/images/girl.png" alt="Girl Icon">  
                     `)}
                     
@@ -165,11 +166,10 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                     <p>${course}</p>
                     <div class="student-action">
                         <div class="edit-icon-student-container">
-                            <img src="/static/images/editIcon.png" alt="Edit Icon">
+                            <img src="/static/images/editIcon.png" alt="Edit Icon" id="edit-student-${id}">
                         </div>
                         <div class="delete-icon-student-container">
-                            <img src="/static/images/deleteIcon.png" alt="Delete Icon">
-
+                            <img src="/static/images/deleteIcon.png" alt="Delete Icon" id="delete-student-${id}">
                         </div>
                     </div>
         `
@@ -375,9 +375,19 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             const res = await response.json()
             console.log(res)
             Success(`Student ${data.student_id} deleted successfully`)
+            HideStudentCard(data.student_id)
         }
         
         const res = await response.json()
         console.log(res)
     })
+
+
+    function HideStudentCard(id){
+        document.querySelector(`#student-info-container-${id}`).classList.add('hide-this-card')
+        console.log(document.querySelector(`#student-info-container-${id}`))
+        setTimeout(function() {
+            document.querySelector(`#student-info-container-${id}`).style.display = 'none'
+        }, 1200)
+    }
 })

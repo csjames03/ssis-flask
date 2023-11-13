@@ -56,7 +56,7 @@ class Students:
             cursor = mysql.new_cursor(dictionary=True)
 
             cursor.execute(
-                """UPDATE student SET first_name = %s, last_name = %s, course_code = %s, year_level = %s, sex = %sWHERE student_id = %s""",
+                """UPDATE student SET first_name = %s, last_name = %s, course_code = %s, year_level = %s, sex = %s WHERE student_id = %s""",
                 (
                     first_name,
                     last_name,
@@ -73,3 +73,15 @@ class Students:
 
         except Exception as e:
             return {"message": "Error editing student"}, 500
+
+    def delete_student(self, student_id):
+        try:
+            cursor = mysql.new_cursor(dictionary=True)
+
+            cursor.execute("DELETE FROM student WHERE student_id = %s", (student_id,))
+
+            mysql.connection.commit()
+
+            return {"message": "Student Deleted Successfully"}, 201
+        except Exception as e:
+            return {"message": "Error deleting student"}, 500

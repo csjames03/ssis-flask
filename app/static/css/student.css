@@ -25,6 +25,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    transition: ease-in;
 }
 
 .student-info-container p{
@@ -244,3 +245,22 @@
 #delete-id-span{
     color: var(--red);
 }
+
+.hide-this-card{
+    animation-name: SlideHorizontal;
+    animation-duration: 1200ms;
+    animation-fill-mode: forwards;  
+}
+
+@keyframes SlideHorizontal {
+    0% {
+        right: 10%;
+    }
+
+    100% {
+        right: -100%;
+        opacity: .2;
+    }
+}
+
+
