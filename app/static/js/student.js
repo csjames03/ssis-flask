@@ -223,13 +223,17 @@ window.addEventListener('DOMContentLoaded',()=>{
                 fnameInputEdit.value = student.first_name
                 lnameInputEdit.value = student.last_name
                 student.sex === "Male" ? (maleGenderInputEdit.checked = true) : (femaleGenderInputEdit.checked = true);
-                yearLevelInputEdit.value = student.student_year
-                courseInputEdit.value = student.student_code
+                yearLevelInputEdit.value = student.year_level
+                courseInputEdit.value = student.course_code
+                console.log(student)
             })
         }
     }
 
     document.querySelector('#edit-student-close').addEventListener('click',()=>{
+        HideModal('edit-student-modal-container')
+    })
+    document.querySelector('#edit_student_cancel_button').addEventListener('click',()=>{
         HideModal('edit-student-modal-container')
     })
 
