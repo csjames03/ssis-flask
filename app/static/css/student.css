@@ -88,6 +88,8 @@
     gap: 50px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     padding: 20px 50px;
+    top: 140%;
+    right: -140%;
 }
 .edit-student-modal-container p,
 .add-student-modal-container p{

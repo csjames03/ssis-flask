@@ -10,11 +10,15 @@ students_model = Students()
 courses_model = Courses()
 
 
-@students.route("/")
+@students.route("/", methods=["GET", "POST"])
 def show_students():
-    students = students_model.get_students()
-    courses = courses_model.get_courses()
-    return render_template("student.html", students=students, courses=courses)
+    if request.method == "GET":
+        students = students_model.get_students()
+        courses = courses_model.get_courses()
+        return render_template("student.html", students=students, courses=courses)
+    else:
+        students = students_model.get_students()
+        return students, 200
 
 
 @students.route("/add", methods=["POST"])

@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded',()=>{
     const addStudentContainer = document.querySelector('#add-student-modal-container')
+    const editStudentContainer = document.querySelector('#edit-student-modal-container')
     const addStudentButton= document.querySelector('#add-student-modal-button')
     const addStudentClose = document.querySelector('#add-student-close')
     const addStudentButtonClose = document.querySelector('#add_student_cancel_button')
@@ -100,7 +101,6 @@ window.addEventListener('DOMContentLoaded',()=>{
         console.log('show', id)
         document.querySelector(`#${id}`).classList.add('show-modal')
         document.querySelector(`#${id}`).classList.remove('hide-modal')
-
     }
 
     function ModalError(id){
@@ -182,5 +182,55 @@ window.addEventListener('DOMContentLoaded',()=>{
         container.appendChild(div)
 
     }
-      
+
+    async function StudentEditInfoGetter(){
+        const url = window.origin +'/students/'
+        const response = await fetch(url,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:{}
+        })
+
+        if(response.ok){
+            const res = await response.json()
+            AddEvents(res)
+            return
+        }
+        const res = await response.json()
+        console.log(res)
+    }
+    StudentEditInfoGetter()
+
+
+
+    function AddEvents(students){
+        //variables for edit modal input 
+        const idInputEdit = document.querySelector('#student_id_edit')
+        const fnameInputEdit = document.querySelector('#first_name_edit')
+        const lnameInputEdit = document.querySelector('#last_name_edit')
+        const maleGenderInputEdit = document.querySelector('#student-gender-male-edit')
+        const femaleGenderInputEdit = document.querySelector('#student-gender-female-edit')
+        const yearLevelInputEdit = document.querySelector('#year_level_edit')
+        const courseInputEdit = document.querySelector('#course_edit')
+        console.log(courseInputEdit)
+
+        for (const student of students){
+            document.querySelector(`#edit-student-${student.student_id}`).addEventListener('click',()=>{
+                ShowModal('edit-student-modal-container')
+                idInputEdit.value = student.student_id
+                fnameInputEdit.value = student.first_name
+                lnameInputEdit.value = student.last_name
+                student.sex === "Male" ? (maleGenderInputEdit.checked = true) : (femaleGenderInputEdit.checked = true);
+                yearLevelInputEdit.value = student.student_year
+                courseInputEdit.value = student.student_code
+            })
+        }
+    }
+
+    document.querySelector('#edit-student-close').addEventListener('click',()=>{
+        HideModal('edit-student-modal-container')
+    })
+
 })
