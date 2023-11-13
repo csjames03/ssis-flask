@@ -98,7 +98,6 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     }
     function ShowModal(id){
-        console.log('show', id)
         document.querySelector(`#${id}`).classList.add('show-modal')
         document.querySelector(`#${id}`).classList.remove('hide-modal')
     }
@@ -207,6 +206,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     //variables for edit modal input 
     const idInputEdit = document.querySelector('#student_id_edit')
+
     const fnameInputEdit = document.querySelector('#first_name_edit')
     const lnameInputEdit = document.querySelector('#last_name_edit')
     const maleGenderInputEdit = document.querySelector('#student-gender-male-edit')
@@ -215,7 +215,6 @@ window.addEventListener('DOMContentLoaded',()=>{
     const courseInputEdit = document.querySelector('#course_edit')
 
     function AddEvents(students){
-        console.log(courseInputEdit)
 
         for (const student of students){
             document.querySelector(`#edit-student-${student.student_id}`).addEventListener('click',()=>{
@@ -226,7 +225,6 @@ window.addEventListener('DOMContentLoaded',()=>{
                 student.sex === "Male" ? (maleGenderInputEdit.checked = true) : (femaleGenderInputEdit.checked = true);
                 yearLevelInputEdit.value = student.year_level
                 courseInputEdit.value = student.course_code
-                console.log(student)
             })
         }
     }
@@ -238,9 +236,86 @@ window.addEventListener('DOMContentLoaded',()=>{
         HideModal('edit-student-modal-container')
     })
 
-    editStudentContainer.addEventListener('submit',async (event)=>{
-        event.preventDefault();
-    })
+    editStudentContainer.addEventListener('submit', async (event)=>{
+        event.preventDefault()
+        const editedGender = maleGenderInputEdit.checked ? ('Male') : ('Female')
+        const studentUneditedInfo = await getStudentInfoFromDatabase(idInputEdit.value)
+        console.log(studentUneditedInfo)
+        if(fnameInputEdit.value === '' || lnameInputEdit.value === "" || editedGender === "" || yearLevelInputEdit.value === "" || courseInputEdit.value === "" ){
+            Error('Cannot Leave the input field Empty')
+            ModalError('edit-student-modal-container')
+            return
+        }
+        else if(fnameInputEdit.value === studentUneditedInfo.first_name && lnameInputEdit.value === studentUneditedInfo.last_name && editedGender === studentUneditedInfo.sex && yearLevelInputEdit.value === studentUneditedInfo.year_level && courseInputEdit.value === studentUneditedInfo.course_code ){
+            Error('Nothings Changed!')
+            ModalError('edit-student-modal-container')
+            return
+        }
+        const data = {
+            student_id: idInputEdit.value,
+            first_name: fnameInputEdit.value,
+            last_name: lnameInputEdit.value,
+            sex: editedGender,
+            course_code: courseInputEdit.value,
+            year_level: yearLevelInputEdit.value,
+        }
+        const url = window.origin + '/students/edit'
+        const response = await fetch(url, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        
+        if(response.ok){
+            const res = await response.json()
+            Success(`Student ${data.student_id} was successfully updated`)
+            HideModal('edit-student-modal-container')
+            console.log(res)
+            //Update the Card Here
 
+            return
+        }
+
+        const res = await response.json()
+        Error(`Student ${data.student_id} was unsuccessfully updated.`)
+
+
+        
+        })
+
+
+
+        async function getStudentInfoFromDatabase(student_id) {
+            const data = {
+                student_id: student_id
+            };
+        
+            const url = window.origin + '/students/get';
+        
+            try {
+                const student = await fetch(url, {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+        
+                if (student.ok) {
+                    const res = await student.json();
+                    return res;
+                } else {
+                    // Handle non-ok response (e.g., log an error, throw an exception, etc.)
+                    console.error('Failed to fetch student data');
+                    return undefined;
+                }
+            } catch (error) {
+                // Handle fetch errors (e.g., network issues)
+                console.error('Error during fetch:', error);
+                return undefined;
+            }
+        }
+        
 
 })

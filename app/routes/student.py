@@ -21,6 +21,16 @@ def show_students():
         return students, 200
 
 
+@students.route("/get", methods=["POST"])
+def show_student():
+    req = request.json
+    student_id = req["student_id"]
+    student = students_model.get_student(student_id)
+    studentInfo = student[0]
+    status_code = student[1]
+    return studentInfo, 200
+
+
 @students.route("/add", methods=["POST"])
 def add_students():
     req = request.json
@@ -36,5 +46,24 @@ def add_students():
     )
     message = create_student[0]
     status_code = create_student[1]
+
+    return message, status_code
+
+
+@students.route("/edit", methods=["POST"])
+def edit_student():
+    req = request.json
+    student_id = req["student_id"]
+    first_name = req["first_name"]
+    last_name = req["last_name"]
+    gender = req["sex"]
+    year_level = req["year_level"]
+    course_code = req["course_code"]
+    student = students_model.edit_student(
+        student_id, first_name, last_name, gender, year_level, course_code
+    )
+
+    message = student[0]
+    status_code = student[1]
 
     return message, status_code
