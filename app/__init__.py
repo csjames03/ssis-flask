@@ -16,8 +16,12 @@ mysql = MySQL(app)
 
 # Register your blueprints
 from app.routes.student import students
+from app.routes.college import colleges
+from app.routes.course import courses
 
 app.register_blueprint(students, url_prefix="/students")
+app.register_blueprint(courses, url_prefix="/courses")
+app.register_blueprint(colleges, url_prefix="/colleges")
 
 
 @app.route("/")

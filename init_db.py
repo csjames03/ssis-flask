@@ -37,14 +37,28 @@ def initialize_database():
         CREATE TABLE IF NOT EXISTS student (
             student_id CHAR(9) PRIMARY KEY,
             first_name VARCHAR(100) NOT NULL,
-            middle_name VARCHAR(100) NOT NULL,
             last_name VARCHAR(100) NOT NULL,
             course_code VARCHAR(20) NOT NULL,
-            year_level INT NOT NULL,
+            year_level VARCHAR(3) NOT NULL,
             sex VARCHAR(10) NOT NULL,
-            email VARCHAR(100) NOT NULL,
             FOREIGN KEY (course_code) REFERENCES course(course_code) ON DELETE CASCADE ON UPDATE CASCADE
         );
+
+        INSERT INTO college (college_code, college_name) VALUES
+        ('CCS', 'College of Computer Studies'),
+        ('CON', 'College of Nursing'),
+        ('CED', 'College of Education'),
+        ('COE', 'College of Engineering'),
+        ('CASS', 'College of Arts and Social Sciences');
+
+
+        INSERT INTO course (course_code, course_name, college_code) VALUES
+        ('BSCS', 'Computer Science', 'CCS'),
+        ('BSCA', 'Computer Applications', 'CCS'),
+        ('BSIT', 'Information Technology', 'CCS'),
+        ('BSIS', 'Information System', 'CCS');
+
+
         """
 
         # Execute the SQL script as separate statements
