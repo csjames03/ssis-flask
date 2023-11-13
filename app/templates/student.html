@@ -10,14 +10,14 @@
 
             <div class="student-info-container" id="student-info-container-{{student.student_id}}">
                 {%if student.sex == 'Male'%}
-                <img class="student-avatar" src="{{url_for('static', filename='images/boy.png')}}" alt="Boy Icon">
+                <img class="student-avatar" id="student-avatar-{{student.student_id}}" src="{{url_for('static', filename='images/boy.png')}}" alt="Boy Icon">
                 {%else %}
                 <img class="student-avatar" src="{{url_for('static', filename='images/girl.png')}}" alt="Girl Icon">
                 {% endif %}
-                <p>{{student.first_name}} {{student.last_name}}</p>
-                <p>{{ student.sex }}</p>
-                <p>{{ student.year_level }}</p>
-                <p>{{ student.course_code }}</p>
+                <p id="student-fullname-{{student.student_id}}">{{student.first_name}} {{student.last_name}}</p>
+                <p id="student-sex-{{student.student_id}}">{{ student.sex }}</p>
+                <p id="student-year-{{student.student_id}}">{{ student.year_level }}</p>
+                <p id="student-course-{{student.student_id}}">{{ student.course_code }}</p>
                 <div class="student-action">
                     <div class="edit-icon-student-container" id="edit-student-{{student.student_id}}">
                         <img src="{{url_for('static', filename='images/editIcon.png')}}" alt="Edit Icon">
