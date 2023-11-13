@@ -159,7 +159,8 @@
 }
 
 #edit_student_cancel_button, #edit_student_submit_button,
-#add_student_cancel_button, #add_student_submit_button{
+#add_student_cancel_button, #delete_student_cancel_button,
+#add_student_submit_button, #delete_student_button{
     width: 100%;
     padding: 10px 15px;
     justify-content: center;
@@ -169,15 +170,16 @@
     color: var(--white);
     cursor: pointer;
 }
-#edit_student_cancel_button,
+#edit_student_cancel_button,#delete_student_cancel_button,
 #add_student_cancel_button{
     background-color: var(--red);
 }
-#edit_student_submit_button,
+#edit_student_submit_button, #delete_student_button,
 #add_student_submit_button{
     background-color: var(--green);
     border: none;
 }
+.delete-student-close,
 .edit-student-close,
 .add-student-close{
     position: absolute;
@@ -215,4 +217,30 @@
     padding: 10px 40px;
     transition-duration: 250ms;
     transition-timing-function: ease-out;
+}
+
+
+.delete-modal{
+    width: 35vw;
+    height: 35vh;
+    position: fixed;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 30px;
+    background-color: var(--white);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    top: 140%;
+    right: -140%;
+}
+
+.delete-modal div{
+    display: flex;
+    gap: 20px;
+}
+
+#delete-id-span{
+    color: var(--red);
 }

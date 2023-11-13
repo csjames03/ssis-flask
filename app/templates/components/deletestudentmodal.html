@@ -1,0 +1,13 @@
+<div class="delete-modal" id="delete-student-modal-container">
+    <p>Are you sure you want to delete Student: <span id="delete-id-span"></span> ?</p>
+    <div>
+        <form action="" id="delete-student-form">
+            <input type="hidden" name="delete-student-id" id="delete-student-id">
+            <input type="submit" value="Delete" id="delete_student_button"> 
+        </form>
+        <div id="delete_student_cancel_button">Cancel</div>
+    </div>
+    <div class="delete-student-close" id="delete-student-close">
+        <img src="{{url_for('static', filename='images/closeIcon.png')}}" alt="Edit Icon">
+    </div>
+</div>
