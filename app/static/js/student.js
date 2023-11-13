@@ -318,4 +318,18 @@ window.addEventListener('DOMContentLoaded',()=>{
         }
         
 
+    function UpdateStudentCardInformation(id, first_name, last_name, gender, year, course){
+        const avatar = document.querySelector(`#student-avatar-${id}`)
+        gender === 'Male' ? avatar.src = '/static/images/boy.png' : avatar.src = '/static/images/girl.png'
+
+        //inserting Full Name
+        document.querySelector(`#student-fullname-${id}`).innerText = `${first_name} ${last_name}`
+
+        document.querySelector(`#student-sex-${id}`).innerText = `${gender}`
+
+        document.querySelector(`#student-year-${id}`).innerText = `${year}`
+
+        document.querySelector(`#student-course-${id}`).innerText = `${course}`
+
+    }
 })
