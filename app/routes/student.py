@@ -8,10 +8,14 @@ students = Blueprint(
 students_model = Students()
 
 
-@students.route("/")
+@students.route("/", methods=["GET", "POST"])
 def show_students():
-    students = students_model.get_students()
-    return render_template("student.html", students=students)
+    if request.method == "GET":
+        students = students_model.get_students()
+        return render_template("student.html", students=students)
+    else:
+        students = students_model.get_students()
+        return students, 200
 
 
 @students.route("/add", methods=["POST"])
