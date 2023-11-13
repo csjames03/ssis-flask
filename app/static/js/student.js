@@ -22,22 +22,18 @@ window.addEventListener('DOMContentLoaded',()=>{
         const studentIdNumber = studentIdWithoutSpaces.split('-')[1]
 
         if(studentIdWithoutSpaces.length === 0){
-            console.log('Student ID is empty!')
             ModalError('add-student-modal-container')
             Error('Student ID is empty!')
             return
         }else if(studentIdWithoutSpaces[4] != '-' || studentIdYear.length != 4 || studentIdNumber.length != 4 ) {
-            console.log('Student ID is not in the correct format!')
             ModalError('add-student-modal-container')
             Error('Student ID is not in the correct format!')
             return 
         }else if(firstname.value.length === 0){
-            console.log('First name is empty!')
             ModalError('add-student-modal-container')
             Error('Student Firstname is empty!')
             return
         }else if(lastname.value.length === 0){
-            console.log('Last name is empty!')
             ModalError('add-student-modal-container')
             Error('Student Lastname is empty!')
             return
@@ -64,7 +60,6 @@ window.addEventListener('DOMContentLoaded',()=>{
 
         if(response.ok){
             const res = await response.json()
-            console.log(res)
             ModalSuccess()
             Success(res.message)
             AppendStudentCard(data.student_id, data.first_name, data.last_name, data.gender, data.year_level, data.course_code)
@@ -198,7 +193,6 @@ window.addEventListener('DOMContentLoaded',()=>{
             return
         }
         const res = await response.json()
-        console.log(res)
     }
     StudentEditInfoGetter()
 
@@ -217,14 +211,15 @@ window.addEventListener('DOMContentLoaded',()=>{
     function AddEvents(students){
 
         for (const student of students){
-            document.querySelector(`#edit-student-${student.student_id}`).addEventListener('click',()=>{
+            document.querySelector(`#edit-student-${student.student_id}`).addEventListener('click',async ()=>{
                 ShowModal('edit-student-modal-container')
-                idInputEdit.value = student.student_id
-                fnameInputEdit.value = student.first_name
-                lnameInputEdit.value = student.last_name
-                student.sex === "Male" ? (maleGenderInputEdit.checked = true) : (femaleGenderInputEdit.checked = true);
-                yearLevelInputEdit.value = student.year_level
-                courseInputEdit.value = student.course_code
+                const newStudentInfo = await getStudentInfoFromDatabase(student.student_id)
+                idInputEdit.value = newStudentInfo.student_id
+                fnameInputEdit.value = newStudentInfo.first_name
+                lnameInputEdit.value = newStudentInfo.last_name
+                newStudentInfo.sex === "Male" ? (maleGenderInputEdit.checked = true) : (femaleGenderInputEdit.checked = true);
+                yearLevelInputEdit.value = newStudentInfo.year_level
+                courseInputEdit.value = newStudentInfo.course_code
             })
         }
     }
@@ -240,7 +235,6 @@ window.addEventListener('DOMContentLoaded',()=>{
         event.preventDefault()
         const editedGender = maleGenderInputEdit.checked ? ('Male') : ('Female')
         const studentUneditedInfo = await getStudentInfoFromDatabase(idInputEdit.value)
-        console.log(studentUneditedInfo)
         if(fnameInputEdit.value === '' || lnameInputEdit.value === "" || editedGender === "" || yearLevelInputEdit.value === "" || courseInputEdit.value === "" ){
             Error('Cannot Leave the input field Empty')
             ModalError('edit-student-modal-container')
@@ -271,9 +265,8 @@ window.addEventListener('DOMContentLoaded',()=>{
             const res = await response.json()
             Success(`Student ${data.student_id} was successfully updated`)
             HideModal('edit-student-modal-container')
-            console.log(res)
             //Update the Card Here
-
+            UpdateStudentCardInformation(data.student_id, data.first_name, data.last_name, data.sex, data.year_level, data.course_code)
             return
         }
 
@@ -320,7 +313,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     function UpdateStudentCardInformation(id, first_name, last_name, gender, year, course){
         const avatar = document.querySelector(`#student-avatar-${id}`)
-        gender === 'Male' ? avatar.src = '/static/images/boy.png' : avatar.src = '/static/images/girl.png'
+        gender === 'Male' ? (avatar.src = '/static/images/boy.png') : (avatar.src = '/static/images/girl.png')
 
         //inserting Full Name
         document.querySelector(`#student-fullname-${id}`).innerText = `${first_name} ${last_name}`

@@ -12,7 +12,7 @@
                 {%if student.sex == 'Male'%}
                 <img class="student-avatar" id="student-avatar-{{student.student_id}}" src="{{url_for('static', filename='images/boy.png')}}" alt="Boy Icon">
                 {%else %}
-                <img class="student-avatar" src="{{url_for('static', filename='images/girl.png')}}" alt="Girl Icon">
+                <img class="student-avatar" id="student-avatar-{{student.student_id}}" src="{{url_for('static', filename='images/girl.png')}}" alt="Girl Icon">
                 {% endif %}
                 <p id="student-fullname-{{student.student_id}}">{{student.first_name}} {{student.last_name}}</p>
                 <p id="student-sex-{{student.student_id}}">{{ student.sex }}</p>
