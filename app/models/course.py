@@ -10,6 +10,21 @@ class Courses:
         data = cursor.fetchall()
         return data
 
+    def check_if_course_code_already_exists(self, course_code):
+        cursor = mysql.new_cursor(dictionary=True)
+        try:
+            cursor.execute(
+                "SELECT * FROM course WHERE course_code = %s", (course_code,)
+            )
+            result = cursor.fetchone()
+
+            if result:
+                return True
+            else:
+                return False
+        except Exception as e:
+            return False
+
     def get_course(self, course_id):
         cursor = mysql.new_cursor(dictionary=True)
         try:
@@ -25,16 +40,17 @@ class Courses:
     def create_course(self, course_code, course_name, college_code):
         cursor = mysql.new_cursor(dictionary=True)
         try:
+            course_code_exist = self.check_if_course_code_already_exists(course_code)
+            if course_code_exist:
+                return {"message": "Course Code already exists"}, 500
             cursor.execute(
-                "Insert into course (course_id, course_name, college_code) values (%s, %s, %s)",
-                course_code,
-                course_name,
-                college_code,
+                "INSERT INTO course (course_code, course_name, college_code) VALUES (%s, %s, %s)",
+                (course_code, course_name, college_code),
             )
             mysql.connection.commit()
             return {"message": "Course created successfully"}, 201
         except Exception as e:
-            return {"message": e.message}, 404
+            return {"message": str(e)}, 404
 
     def update_course(self, course_code, course_name):
         cursor = mysql.new_cursor(dictionary=True)

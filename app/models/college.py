@@ -86,3 +86,23 @@ class Colleges:
 
         except Exception as e:
             return {"message": e}, 500
+
+    def get_college(self, college_code):
+        cursor = mysql.new_cursor(dictionary=True)
+        try:
+            cursor.execute(
+                "SELECT * FROM college WHERE college_code = %s", (college_code,)
+            )
+
+            data = cursor.fetchone()
+
+            if data:
+                return (
+                    data,
+                    200,
+                )
+            else:
+                return {"message": "College not found"}, 404
+
+        except Exception as e:
+            return {"message": str(e)}, 500

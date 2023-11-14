@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from app.models.college import Colleges
 
 colleges = Blueprint(
@@ -13,3 +13,13 @@ def show_colleges():
     colleges = college_model.get_colleges()
     print(colleges)
     return render_template("student.html", colleges=colleges)
+
+
+@colleges.route("/get", methods=["POST"])
+def get_college():
+    req = request.json
+    college_code = req["college_code"]
+    college = college_model.get_college(college_code)
+    data = college[0]
+
+    return data, 200

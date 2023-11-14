@@ -1,4 +1,6 @@
 window.addEventListener('DOMContentLoaded', async ()=>{
+    if(window.location.href === window.origin + '/students/'){
+        console.log('Students')
     const addStudentContainer = document.querySelector('#add-student-modal-container')
     const editStudentContainer = document.querySelector('#edit-student-modal-container')
     const addStudentButton= document.querySelector('#add-student-modal-button')
@@ -389,5 +391,6 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         setTimeout(function() {
             document.querySelector(`#student-info-container-${id}`).style.display = 'none'
         }, 1200)
+    }
     }
 })
