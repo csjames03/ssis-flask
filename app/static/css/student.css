@@ -15,7 +15,7 @@
     display: grid;
     height: 70px;
     border-radius: 10px;
-    grid-template-columns: repeat(5, 1fr); /* Create 5 equal columns */
+    grid-template-columns: repeat(5, 1fr); 
     gap: 20px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
