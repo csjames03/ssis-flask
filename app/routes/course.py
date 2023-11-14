@@ -39,3 +39,22 @@ def get_course():
     course_code = req["course_code"]
     course = courses_model.get_course(course_code)
     return course, 200
+
+
+@courses.route("/edit", methods=["POST"])
+def edit_student():
+    req = request.json
+    course_code = req["course_code"]
+    course_name = req["course_name"]
+    college_code = req["college_code"]
+    print(course_code)
+    course = courses_model.update_course(
+        course_code,
+        course_name,
+        college_code,
+    )
+
+    message = course[0]
+    status_code = course[1]
+
+    return message, status_code

@@ -57,15 +57,14 @@ class Courses:
         except Exception as e:
             return {"message": str(e)}, 404
 
-    def update_course(self, course_code, course_name):
+    def update_course(self, course_code, course_name, college_code):
         cursor = mysql.new_cursor(dictionary=True)
         try:
             cursor.execute(
-                "UPDATE course where course_code = %s SET course_name = %s",
-                course_code,
-                course_name,
+                "UPDATE course SET course_name =%s, college_code=%s WHERE course_code = %s",
+                (course_name, college_code, course_code),
             )
             mysql.connection.commit()
             return {"message": "Course updated successfully"}, 201
         except Exception as e:
-            return {"message": e.message}, 404
+            return {"message": str(e)}, 404

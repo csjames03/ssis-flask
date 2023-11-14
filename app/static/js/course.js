@@ -206,6 +206,60 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             }
         }
 
+        //Submit Edit 
+        document.querySelector('#edit-course-modal-container').addEventListener('submit', async (event)=>{
+            event.preventDefault();
+            const courseCodeInput = document.querySelector('#course_id_edit')
+            const courseNameInput = document.querySelector('#course_name_edit')
+            const collegeCodeInput = document.querySelector('#college_code_course_edit')
+            //Get the course  from the database
+            const course = await getCourseFromDatabase(courseCodeInput.value)
+            if(courseNameInput.value == "" || collegeCodeInput.value == ""){
+                Error('Cant Submit Course Name is Empty')
+                ModalError('edit-course-modal-container')
+                return
+            }
+            if(collegeCodeInput.value == ""){
+                Error('Cant Submit Course Code is Empty')
+                ModalError('edit-course-modal-container')
+                return
+            }
+            if(courseNameInput.value != course.course_name || collegeCodeInput.value != course.college_code){
+                console.log('Change')
+                const data ={
+                    course_code: courseCodeInput.value,
+                    course_name: courseNameInput.value,
+                    college_code: collegeCodeInput.value
+                }
+
+                const url = window.origin + '/courses/edit'
+
+                const response = await fetch(url,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }, 
+                    body: JSON.stringify(data)
+                })
+
+                if(response.ok){
+                    const res = await response.json()
+                    Success(res.message)
+                    HideModal('edit-course-modal-container')
+                    const collegeNameInput =  document.querySelector(`#college_name_${data.college_code}`)
+                    document.querySelector(`#course-course-name-${data.course_code}`).innerText = `${data.course_name}`
+                    document.querySelector(`#course-college-name-code-${data.course_code}`).innerText = ` | ${collegeNameInput.textContent}`
+                }
+
+            }else{
+                Error('Nothings Changed!')
+                ModalError('edit-course-modal-container')
+            }
+            
+            
+            //Compare
+        })
+
 
 
 

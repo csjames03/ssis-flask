@@ -14,7 +14,7 @@
                 <label for="course">College: </label>
                 <select name="course" id="college_code_course_edit">
                     {%for college in colleges:%}
-                        <option value="{{college.college_code}}">{{college.college_code}}</option>
+                        <option value="{{college.college_code}}" id="college_name_{{college.college_code}}">{{college.college_name}}</option>
                     {% endfor %}
                 </select>
             </div>

@@ -10,10 +10,10 @@
             <div class="course-container">
                 <div class="course-card-title">
                     <div class="course-code-container">
-                        <p>{{course.course_code}} <span>| {{course.college_name}}</span></p>
+                        <p id="course-course-code-{{course.course_code}}">{{course.course_code}} <span id="course-college-name-code-{{course.course_code}}">| {{course.college_name}}</span></p>
                     </div>
                     <div class="course-title-container">
-                        <p>{{course.course_name}}</p>
+                        <p id="course-course-name-{{course.course_code}}">{{course.course_name}}</p>
                         <div class="student-count-container">
                             <p>Students Enrolled: {{course.student_count}}</p>
                         </div>
