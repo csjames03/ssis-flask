@@ -11,5 +11,4 @@ courses_model = Courses()
 @courses.route("/")
 def show_colleges():
     courses = courses_model.get_courses()
-    print(courses)
-    return render_template("student.html", courses=courses)
+    return render_template("course.html", courses=courses)
