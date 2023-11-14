@@ -143,6 +143,7 @@
     width: 15px;
 }
 
+.edit-course-modal-container,
 .add-course-modal-container{
     height: 75vh;
     width: 45vw;
@@ -159,6 +160,7 @@
     right: -140%;
 }
 
+.edit-course-close,
 .add-course-close{
     position: absolute;
     width: 30px;
@@ -172,7 +174,7 @@
     right: -2%;
     cursor: pointer;
 }
-
+#edit_course_submit_button, #edit_course_cancel_button,
 #add_course_submit_button, #add_course_cancel_button{
     width: 100%;
     padding: 10px 15px;
@@ -183,10 +185,11 @@
     color: var(--white);
     cursor: pointer;
 }
+#edit_course_submit_button,
 #add_course_submit_button{
     background-color: var(--green);
 }
-
+#edit_course_cancel_button,
 #add_course_cancel_button{
     background-color: var(--red);
 }
@@ -208,7 +211,20 @@
     align-items: center;
 }
 
+#college_code_course_edit,
+.edit-course-modal-row-input-container input,
 .add-course-modal-row-input-container input{
     width: 100%;
     padding: 5px 10px;
+}
+
+.edit-course-modal-row-input-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+.edit-course-modal-row-input-container label{
+    font-size: 12px;
 }

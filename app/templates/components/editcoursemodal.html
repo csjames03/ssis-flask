@@ -1,0 +1,30 @@
+<form class="edit-course-modal-container" id="edit-course-modal-container">
+    <p>Add Course Modal</p>
+    <div>
+        <div class="edit-course-modal-row-input-container">
+            <label for="">Code:</label>
+            <input type="text" name="course_id" id="course_id_edit" placeholder="Course ID" readonly>
+        </div>
+
+        <div class="edit-course-modal-row-input-container">
+            <label for="">Name:</label>
+            <input type="text" name="course_name" id="course_name_edit" placeholder="Course name">
+        </div>
+            <div id="course_add_div">
+                <label for="course">College: </label>
+                <select name="course" id="college_code_course_edit">
+                    {%for college in colleges:%}
+                        <option value="{{college.college_code}}">{{college.college_code}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="add-course-modal-row-input-container">
+            <input type="submit" value="Submit" id="edit_course_submit_button">
+            <div id="edit_course_cancel_button">Cancel</div>
+        </div>
+        <div class="add-course-close" id="edit-course-close">
+            <img src="{{url_for('static', filename='images/closeIcon.png')}}" alt="Edit Icon">
+        </div>
+    </div>
+</form>

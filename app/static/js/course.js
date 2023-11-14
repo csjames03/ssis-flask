@@ -1,10 +1,20 @@
 window.addEventListener('DOMContentLoaded', async ()=>{
     if(window.location.href === window.origin + '/courses/'){
+        const editCourseCancelButton = document.querySelector('#edit_course_cancel_button')
+        const editCourseCloseButton = document.querySelector('#edit-course-close')
         const addCourseCancelButton = document.querySelector('#add_course_cancel_button');
         const addCourseCloseButton = document.querySelector('#add-course-close')
         const addCourseButton = document.querySelector('#add-course-modal-button');
         addCourseButton.addEventListener('click', ()=>{
             ShowModal('add-course-modal-container')
+        })
+
+        editCourseCloseButton.addEventListener('click', ()=>{
+            HideModal('edit-course-modal-container')
+        })
+
+        editCourseCancelButton.addEventListener('click', ()=>{
+            HideModal('edit-course-modal-container')
         })
 
         addCourseCloseButton.addEventListener('click', ()=>{
@@ -141,5 +151,77 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             `
             mainContainer.appendChild(container)
         }
+
+
+        async function GetCourseCodes(){
+            const url = window.origin + '/courses/'
+            const response = await fetch(url,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            if(response.ok){
+                const res = await response.json()
+                AddEditEventListener(res)
+                return
+            }
+        }
+        GetCourseCodes()
+
+        async function AddEditEventListener(courses){
+            console.log(courses)
+            for (let i = 0; i < courses.length; i++) {
+                let element = document.querySelector(`#edit-course-${courses[i].course_code}`);
+                if (element) {
+                    element.addEventListener('click', async () => {
+                        ShowModal('edit-course-modal-container');
+                        const course = await getCourseFromDatabase(courses[i].course_code)
+                        document.querySelector('#course_id_edit').value = course.course_code
+                        document.querySelector('#course_name_edit').value = course.course_name
+                        document.querySelector('#college_code_course_edit').value = course.college_code
+                    });
+                } else {
+                    console.warn(`Element #edit-course-${courses[i].course_code} not found.`);
+                }
+            }
+        }
+
+
+        async function getCourseFromDatabase(code){
+            const url = window.origin +'/courses/get'
+            const data = {
+                course_code: code
+            }
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+
+            if(response.ok){
+                const res = await response.json()
+                return res
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 })

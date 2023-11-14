@@ -25,17 +25,22 @@ class Courses:
         except Exception as e:
             return False
 
-    def get_course(self, course_id):
+    def get_course(self, course_code):
         cursor = mysql.new_cursor(dictionary=True)
         try:
             cursor.execute(
-                "SELECT * FROM course where course_id = %s",
-                course_id,
+                "SELECT * FROM course WHERE course_code = %s", (course_code,)
             )
             data = cursor.fetchone()
-            return data
+
+            if data:
+                return data
+            else:
+                return {"message": "Course not found"}, 404
         except Exception as e:
-            return {"message": e.message}, 404
+            return {"message": str(e)}, 500
+        finally:
+            cursor.close()
 
     def create_course(self, course_code, course_name, college_code):
         cursor = mysql.new_cursor(dictionary=True)
