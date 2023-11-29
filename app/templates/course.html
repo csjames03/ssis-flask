@@ -7,7 +7,7 @@
         </div>
 
         {% for course in courses %}
-            <div class="course-container">
+            <div class="course-container" id="course-container-{{course.course_code}}">
                 <div class="course-card-title">
                     <div class="course-code-container">
                         <p id="course-course-code-{{course.course_code}}">{{course.course_code}} <span id="course-college-name-code-{{course.course_code}}">| {{course.college_name}}</span></p>

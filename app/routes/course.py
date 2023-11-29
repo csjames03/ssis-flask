@@ -58,3 +58,15 @@ def edit_student():
     status_code = course[1]
 
     return message, status_code
+
+
+@courses.route("/delete", methods=["POST"])
+def delete_course():
+    req = request.json
+    course_code = req["course_code"]
+    course_delete = courses_model.delete_course(
+        course_code,
+    )
+    message = course_delete[0]
+    status_code = course_delete[1]
+    return message, status_code

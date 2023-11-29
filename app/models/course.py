@@ -1,4 +1,7 @@
 from app import mysql
+from app.models.student import Students
+
+student_model = Students()
 
 
 class Courses:
@@ -68,3 +71,20 @@ class Courses:
             return {"message": "Course updated successfully"}, 201
         except Exception as e:
             return {"message": str(e)}, 404
+
+    def delete_course(self, course_code):
+        cursor = mysql.new_cursor(dictionary=True)
+        # Check if there are enrolled students in the course
+        try:
+            student_enrolled = student_model.get_student_with_course_id(course_code)
+            print("Student enrolled:", student_enrolled)
+            if not student_enrolled:
+                cursor.execute(
+                    "DELETE FROM course WHERE course_code = %s", (course_code,)
+                )
+                mysql.connection.commit()
+                return {"message": "Course deleted successfully"}, 200
+            else:
+                return {"message": "Course can't be deleted"}, 500
+        except Exception as e:
+            return {"message": str(e)}, 500

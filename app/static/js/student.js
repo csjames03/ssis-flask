@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
     const addStudentButtonClose = document.querySelector('#add_student_cancel_button')
 
     addStudentContainer.addEventListener('click',()=>{
-        
+    
     })
 
     addStudentContainer.addEventListener('submit',async (event)=>{

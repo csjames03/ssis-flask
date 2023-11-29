@@ -85,3 +85,16 @@ class Students:
             return {"message": "Student Deleted Successfully"}, 201
         except Exception as e:
             return {"message": "Error deleting student"}, 500
+
+    def get_student_with_course_id(self, course_id):
+        print("Model")
+        try:
+            cursor = mysql.new_cursor(dictionary=True)
+            cursor.execute("SELECT * FROM student WHERE course_code = %s", (course_id,))
+            student_exist = cursor.fetchone()
+            if student_exist:
+                return True
+            else:
+                return False
+        except Exception as e:
+            return False

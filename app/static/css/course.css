@@ -174,6 +174,7 @@
     right: -2%;
     cursor: pointer;
 }
+#delete_course_cancel_button,
 #edit_course_submit_button, #edit_course_cancel_button,
 #add_course_submit_button, #add_course_cancel_button{
     width: 100%;
@@ -184,11 +185,12 @@
     margin: 5px;
     color: var(--white);
     cursor: pointer;
-}
+}   
 #edit_course_submit_button,
 #add_course_submit_button{
     background-color: var(--green);
 }
+#delete_course_cancel_button,
 #edit_course_cancel_button,
 #add_course_cancel_button{
     background-color: var(--red);
@@ -227,4 +229,9 @@
 }
 .edit-course-modal-row-input-container label{
     font-size: 12px;
+}
+
+#delete-id-course-span{
+    color: var(--red);
+    font-weight: bold;
 }

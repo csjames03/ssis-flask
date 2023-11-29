@@ -1,5 +1,7 @@
 window.addEventListener('DOMContentLoaded', async ()=>{
     if(window.location.href === window.origin + '/courses/'){
+        const deleteCourseCloseButton = document.querySelector('#delete-course-close')
+        const delteCourseCancelButton = document.querySelector('#delete_course_cancel_button')
         const editCourseCancelButton = document.querySelector('#edit_course_cancel_button')
         const editCourseCloseButton = document.querySelector('#edit-course-close')
         const addCourseCancelButton = document.querySelector('#add_course_cancel_button');
@@ -22,6 +24,13 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         })
         addCourseCancelButton.addEventListener('click', ()=>{
             HideModal('add-course-modal-container')
+        })
+
+        deleteCourseCloseButton.addEventListener('click', ()=>{
+            HideModal('delete-course-modal-container')
+        })
+        delteCourseCancelButton.addEventListener('click', ()=>{
+            HideModal('delete-course-modal-container')
         })
 
 
@@ -72,6 +81,9 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                 Success(res.message)
                 AddCourseCard(data.course_code, data.course_name, college.college_name)
                 HideModal('add-course-modal-container')
+                document.querySelector('#course_id_add').value = ""
+                document.querySelector('#course_name_add').value = ""
+
             }
 
 
@@ -140,10 +152,10 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                     </div>
                 </div>
                 <div class="course-action">
-                    <div class="edit-icon-course-container" id="edit-student-{{course.course_code}}">
+                    <div class="edit-icon-course-container" id="edit-course-{{course.course_code}}">
                         <img src="/static/images/editIcon.png" alt="Edit Icon">
                     </div>
-                    <div class="delete-icon-course-container" id="delete-student-{{course.course_code}}">
+                    <div class="delete-icon-course-container" id="delete-course-${course_code}">
                         <img src="/static/images/deleteIcon.png" alt="Delete Icon">
                     </div>
                 </div>
@@ -165,6 +177,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             if(response.ok){
                 const res = await response.json()
                 AddEditEventListener(res)
+                AddDeleteEventListener(res)
                 return
             }
         }
@@ -187,6 +200,25 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                 }
             }
         }
+
+        async function AddDeleteEventListener(courses){
+            console.log(courses)
+            for (let i = 0; i < courses.length; i++) {
+                let element = document.querySelector(`#delete-course-${courses[i].course_code}`);
+                if (element) {
+                    element.addEventListener('click', async () => {
+                        ShowModal('delete-course-modal-container');
+                        document.querySelector(`#delete-id-course-span`).innerText = `${courses[i].course_code}`
+                        document.querySelector(`#delete-course-id`).value = `${courses[i].course_code}`
+                        console.log(courses[i].course_code)
+                    });
+                } else {
+                    console.warn(`Element #edit-course-${courses[i].course_code} not found.`);
+                }
+            }
+        }
+
+       
 
 
         async function getCourseFromDatabase(code){
@@ -261,18 +293,32 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         })
 
 
+        //Delete Course 
+        document.querySelector('#delete-course-form').addEventListener('submit', async (event)=>{
+            event.preventDefault()
+            const courseCode = document.querySelector('#delete-id-course-span').innerText
+            const url = window.origin + '/courses/delete'
+            console.log(courseCode)
+            const data = {course_code: courseCode}
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
 
-
-
-
-
-
-
-
-
-
-
-
+            if(response.ok){    
+                const res = await response.json()
+                document.querySelector(`#course-container-${courseCode}`).style.display = 'none '
+                Success(res.message)
+                HideModal('delete-course-modal-container')
+            }else{
+                const res = await response.json()
+                Error(res.message)
+                HideModal('delete-course-modal-container')
+            }
+        })
 
 
 

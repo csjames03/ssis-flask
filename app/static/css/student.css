@@ -161,7 +161,7 @@
 
 #edit_student_cancel_button, #edit_student_submit_button,
 #add_student_cancel_button, #delete_student_cancel_button,
-#add_student_submit_button, #delete_student_button{
+#add_student_submit_button, #delete_student_button, #delete_course_button{
     width: 100%;
     padding: 10px 15px;
     justify-content: center;
@@ -176,7 +176,7 @@
     background-color: var(--red);
 }
 #edit_student_submit_button, #delete_student_button,
-#add_student_submit_button{
+#add_student_submit_button, #delete_course_button{
     background-color: var(--green);
     border: none;
 }
