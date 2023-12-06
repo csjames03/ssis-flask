@@ -30,5 +30,7 @@ def create_college():
     req = request.json
     college_code = req["college_code"]
     college_name = req["college_name"]
-    print(college_code, college_name)
-    return {"message": "College Added Successfully"}, 200
+    college = college_model.add_college(college_code, college_name)
+    message = college[0]
+    status_code = college[1]
+    return message, status_code

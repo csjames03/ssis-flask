@@ -1,6 +1,19 @@
 const collegeAddForm = document.querySelector('#add-college-modal-container')
 
 
+document.querySelector('#add-college-modal-button').addEventListener('click', ()=>{
+    ShowModal('add-college-modal-container')
+})
+
+document.querySelector('#add-college-close').addEventListener('click', ()=>{
+    HideModal('add-college-modal-container')
+})
+
+document.querySelector('#add_college_cancel_button').addEventListener('click', ()=>{
+    HideModal('add-college-modal-container')
+})
+
+
 
 collegeAddForm.addEventListener('submit', async(event)=>{
     event.preventDefault();

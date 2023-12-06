@@ -110,8 +110,8 @@
     gap: 50px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     padding: 20px 50px;
-    top:50%;
-    right: 50%;
+    top: 140%;
+    right: -140%;
 }
 
 
@@ -154,6 +154,23 @@
 }
 
 
-#add_course_cancel_button:hover{
+#add_college_cancel_button:hover{
     background-color: #9e2733;
 }
+
+#add_college_cancel_button{
+    background-color: var(--red);
+}
+
+#delete_college_cancel_button,
+#edit_college_submit_button, #edit_college_cancel_button,
+#add_college_submit_button, #add_college_cancel_button{
+    width: 100%;
+    padding: 10px 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin: 5px;
+    color: var(--white);
+    cursor: pointer;
+} 
