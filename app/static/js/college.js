@@ -13,6 +13,13 @@ document.querySelector('#add_college_cancel_button').addEventListener('click', (
     HideModal('add-college-modal-container')
 })
 
+document.querySelector('#edit-college-close').addEventListener('click', ()=>{
+    HideModal('edit-college-modal-container')
+})
+
+document.querySelector('#edit_college_cancel_button').addEventListener('click', ()=>{
+    HideModal('edit-college-modal-container')
+})
 
 
 collegeAddForm.addEventListener('submit', async(event)=>{
@@ -135,3 +142,69 @@ function AddCollegeCard(collegeCode, collegeName){
     `
     mainContainer.appendChild(container)
 }
+
+
+async function GetCourseCodes(){
+    const url = window.origin + '/colleges/all'
+    const response = await fetch(url,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    if(response.ok){
+        const res = await response.json()
+        AddEditEventListener(res)
+        return
+    }
+}
+
+GetCourseCodes()
+
+async function AddEditEventListener(colleges){
+    console.log(colleges)
+    for (let i = 0; i < colleges.length; i++) {
+        //edit-college-{{college.college_code}}
+        let element = document.querySelector(`#edit-college-${colleges[i].college_code}`);
+        if (element) {
+            element.addEventListener('click', async () => {
+                ShowModal('edit-college-modal-container');
+                const college = await getCollegeFromDatabase(colleges[i].college_code)
+                document.querySelector('#college_code_edit').value = college.college_code
+                document.querySelector('#college_name_edit').value = college.college_name
+            });
+        } else {
+            console.warn(`Element #edit-college-${colleges[i].college_code} not found.`);
+        }
+    }
+}
+
+
+async function getCollegeFromDatabase(code) {
+    // Construct the URL
+    const url = window.origin + '/colleges/get';
+  
+    // Prepare the data payload
+    const data = {
+      'college_code': code
+    };
+  
+    // Make an asynchronous POST request using the Fetch API
+    const request = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  
+    // Check if the request was successful (status code 200-299)
+    if (request.ok) {
+      // If successful, parse the JSON response
+      const response = await request.json();
+      return response;
+    }
+  
+    // If the request was not successful, return null
+    return null;
+  }
+  

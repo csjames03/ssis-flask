@@ -1,0 +1,19 @@
+<form class="edit-college-modal-container" id="edit-college-modal-container">
+    <p>Edit College Modal</p>
+    <div>
+        <div class="edit-college-modal-row-input-container">
+            <input type="text" name="college_code" id="college_code_edit" placeholder="College Code" readonly>
+        </div>
+
+        <div class="edit-college-modal-row-input-container">
+            <input type="text" name="college_name" id="college_name_edit" placeholder="College name">
+        </div>
+        <div class="edit-college-modal-row-input-container">
+            <input type="submit" value="Submit" id="edit_college_submit_button">
+            <div id="edit_college_cancel_button">Cancel</div>
+        </div>
+        <div class="edit-college-close" id="edit-college-close">
+            <img src="{{url_for('static', filename='images/closeIcon.png')}}" alt="Close Icon">
+        </div>
+    </div>
+</form>

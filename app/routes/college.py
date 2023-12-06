@@ -11,14 +11,20 @@ college_model = Colleges()
 @colleges.route("/")
 def show_colleges():
     colleges = college_model.get_colleges()
-    print(colleges)
     return render_template("college.html", colleges=colleges)
+
+
+@colleges.route("/all", methods=["POST"])
+def get_all_colleges():
+    colleges = college_model.get_colleges()
+    return colleges, 200
 
 
 @colleges.route("/get", methods=["POST"])
 def get_college():
     req = request.json
     college_code = req["college_code"]
+    print(college_code)
     college = college_model.get_college(college_code)
     data = college[0]
 

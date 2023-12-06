@@ -5,16 +5,10 @@
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 10px;
     align-items: center;
-    cursor: pointer;
-    overflow-y: auto;
-    padding-top: 290px;
-    gap: 20px;
+    padding-top: 40px;
     padding-bottom: 20px;
-    padding-right: 10px;
-    padding-left: 10px;
-    
 }
 
 .add-college-modal-button{
@@ -98,6 +92,7 @@
     width: 15px;
 }
 
+.edit-college-modal-container,
 .add-college-modal-container{
     height: 75vh;
     width: 45vw;
@@ -138,6 +133,7 @@
     margin-bottom: 30px;
 }
 
+.edit-college-modal-row-input-container input,
 .add-college-modal-row-input-container input{
     padding: 5px 10px;
 }
@@ -146,18 +142,20 @@
     background-color: var(--red);
 }
 
+#edit_college_submit_button,
 #add_college_submit_button{
     background-color: var(--green);
 }
+#edit_college_submit_button:hover,
 #add_college_submit_button:hover{
     background-color: #137447;
 }
 
-
+#edit_college_cancel_button:hover,
 #add_college_cancel_button:hover{
     background-color: #9e2733;
 }
-
+#edit_college_cancel_button,
 #add_college_cancel_button{
     background-color: var(--red);
 }
