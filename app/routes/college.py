@@ -23,3 +23,12 @@ def get_college():
     data = college[0]
 
     return data, 200
+
+
+@colleges.route("/add", methods=["POST"])
+def create_college():
+    req = request.json
+    college_code = req["college_code"]
+    college_name = req["college_name"]
+    print(college_code, college_name)
+    return {"message": "College Added Successfully"}, 200
