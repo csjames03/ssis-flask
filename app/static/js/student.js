@@ -162,7 +162,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                         <img class="student-avatar"  id="student-avatar-${id}" src="/static/images/girl.png" alt="Girl Icon">  
                     `)}
                     
-                    <p  id="student-fullname-${id}">${fname}${lname}</p>
+                    <p  id="student-fullname-${id}">${fname} ${lname}</p>
                     <p  id="student-sex-${id}">${gender}</p>
                     <p  id="student-year-${id}">${year}</p>
                     <p  id="student-course-${id}">${course}</p>

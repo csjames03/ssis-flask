@@ -81,9 +81,10 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                 Success(res.message)
                 AddCourseCard(data.course_code, data.course_name, college.college_name)
                 HideModal('add-course-modal-container')
+                GetCourseCodes()
                 document.querySelector('#course_id_add').value = ""
                 document.querySelector('#course_name_add').value = ""
-
+                
             }
 
 
@@ -143,16 +144,16 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             container.innerHTML =`
             <div class="course-card-title">
                 <div class="course-code-container">
-                    <p>${course_code} <span>| ${college_name}</span></p>
+                    <p id="course-course-code-${course_code}">${course_code} <span  id="course-college-name-code-${course_code}">| ${college_name}</span></p>
                 </div>
                 <div class="course-title-container">
-                    <p>${course_name}</p>
+                    <p id="course-course-name-${course_code}">${course_name}</p>
                     <div class="student-count-container">
                         <p>Students Enrolled: 0</p>
                     </div>
                 </div>
                 <div class="course-action">
-                    <div class="edit-icon-course-container" id="edit-course-{{course.course_code}}">
+                    <div class="edit-icon-course-container" id="edit-course-${course_code}">
                         <img src="/static/images/editIcon.png" alt="Edit Icon">
                     </div>
                     <div class="delete-icon-course-container" id="delete-course-${course_code}">
