@@ -158,14 +158,14 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         div.classList.add('student-info-container')
         div.innerHTML =`
                     ${ gender === 'Male' ?
-                    (`<img class="student-avatar" src="/static/images/boy.png" alt="Boy Icon">`):(`
-                        <img class="student-avatar" src="/static/images/girl.png" alt="Girl Icon">  
+                    (`<img class="student-avatar" id="student-avatar-${id}" src="/static/images/boy.png" alt="Boy Icon">`):(`
+                        <img class="student-avatar"  id="student-avatar-${id}" src="/static/images/girl.png" alt="Girl Icon">  
                     `)}
                     
-                    <p>${fname}${lname}</p>
-                    <p>${gender}</p>
-                    <p>${year}</p>
-                    <p>${course}</p>
+                    <p  id="student-fullname-${id}">${fname}${lname}</p>
+                    <p  id="student-sex-${id}">${gender}</p>
+                    <p  id="student-year-${id}">${year}</p>
+                    <p  id="student-course-${id}">${course}</p>
                     <div class="student-action">
                         <div class="edit-icon-student-container">
                             <img src="/static/images/editIcon.png" alt="Edit Icon" id="edit-student-${id}">
