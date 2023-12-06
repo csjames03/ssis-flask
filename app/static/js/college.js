@@ -1,3 +1,4 @@
+window.addEventListener('DOMContentLoaded',()=>{
 const collegeAddForm = document.querySelector('#add-college-modal-container')
 
 
@@ -358,3 +359,5 @@ document.querySelector('#edit-college-modal-container').addEventListener('submit
     ModalError('delete-college-modal-container')
     return
   })
+
+})

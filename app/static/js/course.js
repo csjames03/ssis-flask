@@ -67,9 +67,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                 containers.forEach(container => container.remove());
             
                 const courses = await request.json();
-                console.log(courses)
                 courses.forEach(course => AddCourseCard(course.course_code, course.course_name, course.college_code, course.student_count));
-                GetCourseCodes()
+                await GetCourseCodes()
                 return
             }
     
@@ -182,6 +181,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             const mainContainer = document.querySelector('.course-main-container')
             const container = document.createElement('div')
             container.classList.add('course-container')
+            container.id = `course-container-${course_code}`
             container.innerHTML =`
             <div class="course-card-title">
                 <div class="course-code-container">
@@ -350,7 +350,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
 
             if(response.ok){    
                 const res = await response.json()
-                document.querySelector(`#course-container-${courseCode}`).style.display = 'none '
+                document.querySelector(`#course-container-${courseCode}`).style.display = 'none'
                 Success(res.message)
                 HideModal('delete-course-modal-container')
             }else{
