@@ -88,3 +88,27 @@ class Courses:
                 return {"message": "Course can't be deleted"}, 500
         except Exception as e:
             return {"message": str(e)}, 500
+
+    def search_courses_across_columns(self, search_term):
+        cursor = mysql.new_cursor(dictionary=True)
+        try:
+            # Construct a dynamic query to search across relevant columns in the "course" table
+            columns_query = "SHOW COLUMNS FROM course"
+            cursor.execute(columns_query)
+            columns = [column["Field"] for column in cursor.fetchall()]
+
+            if not columns:
+                return {"message": "No columns found in the course table"}, 500
+
+            conditions = " OR ".join([f"{column} LIKE %s" for column in columns])
+            query = f"SELECT * FROM course WHERE {conditions}"
+
+            # Use the LIKE operator to search for the specified term in each column
+            cursor.execute(query, tuple(["%" + search_term + "%"] * len(columns)))
+
+            data = cursor.fetchall()
+            return data, 200
+        except Exception as e:
+            return {"message": str(e)}, 500
+        finally:
+            cursor.close()

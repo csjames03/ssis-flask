@@ -33,6 +33,47 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             HideModal('delete-course-modal-container')
         })
 
+        const searchqueryForm = document.querySelector('#search')
+        const location = window.location.href
+        const colleges = window.origin+'/colleges/'
+        const students = window.origin+'/students/'
+        const courses = window.origin+'/courses/'
+        searchqueryForm.addEventListener('input',async (event)=>{
+            event.preventDefault();
+            const query = document.querySelector("#search-query").value
+            if(location === courses){
+                searchCourses(query)
+            }
+            return
+        })
+
+        searchqueryForm.addEventListener('submit',async (event)=>{
+            event.preventDefault();
+        })
+
+        async function searchCourses(query){
+            const url = window.origin+'/courses/search'
+            const data = {
+                query: query,
+            }
+            const request = await fetch(url,{
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+    
+            if (request.ok) {
+                const containers = document.querySelectorAll('.course-container');
+                containers.forEach(container => container.remove());
+            
+                const courses = await request.json();
+                console.log(courses)
+                courses.forEach(course => AddCourseCard(course.course_code, course.course_name, course.college_code));
+                GetCourseCodes()
+                return
+            }
+    
+        }
 
         //Add Course Submit
         document.querySelector('#add_course_submit_button').addEventListener('click', async (event)=>{
@@ -148,9 +189,6 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                 </div>
                 <div class="course-title-container">
                     <p id="course-course-name-${course_code}">${course_name}</p>
-                    <div class="student-count-container">
-                        <p>Students Enrolled: 0</p>
-                    </div>
                 </div>
                 <div class="course-action">
                     <div class="edit-icon-course-container" id="edit-course-${course_code}">
@@ -185,7 +223,6 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         GetCourseCodes()
 
         async function AddEditEventListener(courses){
-            console.log(courses)
             for (let i = 0; i < courses.length; i++) {
                 let element = document.querySelector(`#edit-course-${courses[i].course_code}`);
                 if (element) {
@@ -203,7 +240,6 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         }
 
         async function AddDeleteEventListener(courses){
-            console.log(courses)
             for (let i = 0; i < courses.length; i++) {
                 let element = document.querySelector(`#delete-course-${courses[i].course_code}`);
                 if (element) {

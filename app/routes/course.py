@@ -70,3 +70,15 @@ def delete_course():
     message = course_delete[0]
     status_code = course_delete[1]
     return message, status_code
+
+
+@courses.route("/search", methods=["POST"])
+def search_course():
+    req = request.json
+    query = req["query"]
+    print(query)
+    course = courses_model.search_courses_across_columns(query)
+    message = course[0]
+    status_code = course[1]
+
+    return message, status_code

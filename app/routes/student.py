@@ -78,3 +78,15 @@ def delete_student():
     status_code = student[1]
 
     return message, status_code
+
+
+@students.route("/search", methods=["POST"])
+def search_student():
+    req = request.json
+    query = req["query"]
+    print(query)
+    student = students_model.search_students_across_columns(query)
+    message = student[0]
+    status_code = student[1]
+
+    return message, status_code

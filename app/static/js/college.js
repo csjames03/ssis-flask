@@ -29,6 +29,50 @@ document.querySelector('#delete_college_cancel_button').addEventListener('click'
     HideModal('delete-college-modal-container')
 })
 
+
+const searchqueryForm = document.querySelector('#search')
+        const colleges = window.origin+'/colleges/'
+        const students = window.origin+'/students/'
+        const courses = window.origin+'/courses/'
+        searchqueryForm.addEventListener('input',async (event)=>{
+            event.preventDefault();
+            const query = document.querySelector("#search-query").value
+            if(window.location.href === colleges){
+                searchColleges(query)
+            }
+            return
+        })
+
+        searchqueryForm.addEventListener('submit',async (event)=>{
+            event.preventDefault();
+        })
+
+        async function searchColleges(query){
+            const url = window.origin+'/colleges/search'
+            const data = {
+                query: query,
+            }
+            const request = await fetch(url,{
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+    
+            if (request.ok) {
+                const containers = document.querySelectorAll('.college-container');
+                containers.forEach(container => container.remove());
+            
+                const colleges = await request.json();
+                console.log(colleges)
+                colleges.forEach(college => AddCollegeCard(college.college_code, college.college_name));
+                AddEditEventListener(colleges)
+                AddDeleteEventListener(colleges)
+                return
+            }
+    
+        }
+
+
 collegeAddForm.addEventListener('submit', async(event)=>{
     event.preventDefault();
     const collegeCode = document.querySelector('#college_code_add')
@@ -137,7 +181,6 @@ function AddCollegeCard(collegeCode, collegeName){
             </div>
             <div class="college-details">
                 <p id="college-name-${collegeCode}">${collegeName} <span>(${collegeCode})</span></p>
-                <p>Course Count: 0</p>
             </div>
             <div class="college-action">
                 <div class="edit-icon-college-container" id="edit-college-${collegeCode}">

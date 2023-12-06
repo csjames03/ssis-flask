@@ -98,3 +98,31 @@ class Students:
                 return False
         except Exception as e:
             return False
+
+    def search_students_across_columns(self, search_term):
+        cursor = mysql.new_cursor(dictionary=True)
+        try:
+            # Construct a dynamic query to search across all columns except "gender"
+            columns_query = "SHOW COLUMNS FROM student"
+            cursor.execute(columns_query)
+            columns = [column["Field"] for column in cursor.fetchall()]
+
+            if not columns:
+                return {"message": "No columns found in the student table"}, 500
+
+            # Exclude the "gender" column from the search
+            columns_to_search = [column for column in columns if column != "sex"]
+
+            # Construct a dynamic query using CONCAT for selected columns
+            concatenated_columns = ", ".join(
+                [f"CONCAT_WS(' ', {column})" for column in columns_to_search]
+            )
+            query = f"SELECT * FROM student WHERE CONCAT_WS(' ', {concatenated_columns}) LIKE %s"
+
+            # Use the LIKE operator to search for the specified term
+            cursor.execute(query, ("%" + search_term + "%",))
+
+            data = cursor.fetchall()
+            return data, 200
+        except Exception as e:
+            return {"message": str(e)}, 500

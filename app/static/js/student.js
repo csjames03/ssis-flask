@@ -11,6 +11,49 @@ window.addEventListener('DOMContentLoaded', async ()=>{
     
     })
 
+    const searchqueryForm = document.querySelector('#search')
+    const location = window.location.href
+    const colleges = window.origin+'/colleges/'
+    const students = window.origin+'/students/'
+    const courses = window.origin+'/courses/'
+    searchqueryForm.addEventListener('input',async (event)=>{
+        event.preventDefault();
+        const query = document.querySelector("#search-query").value
+        if(location === students){
+            searchStudent(query)
+        }
+        return
+    })
+
+    searchqueryForm.addEventListener('submit',async (event)=>{
+        event.preventDefault();
+    })
+
+
+    async function searchStudent(query){
+        const url = window.origin+'/students/search'
+        const data = {
+            query: query,
+        }
+        const request = await fetch(url,{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+
+        if (request.ok) {
+            const containers = document.querySelectorAll('.student-info-container');
+            containers.forEach(container => container.remove());
+        
+            const students = await request.json();
+        
+            students.forEach(student => AppendStudentCard(student.student_id, student.first_name, student.last_name, student.sex, student.year_level, student.course_code));
+            AddDeleteEvents(students);
+            AddEditEvents(students);
+        }
+
+    }
+
     addStudentContainer.addEventListener('submit',async (event)=>{
         event.preventDefault()
         const studentId =  document.querySelector('#student_id_add')
@@ -339,11 +382,10 @@ window.addEventListener('DOMContentLoaded', async ()=>{
 
 
     function AddDeleteEvents(students){
-        for (const student of students) {
+       for (const student of students) {
             const deleteButton = document.getElementById(`delete-student-${student.student_id}`);
             const deleteIdInput = document.getElementById('delete-student-id');
             const deleteIdSpan = document.getElementById('delete-id-span');
-        
             deleteButton.addEventListener('click', () => {
                 deleteIdInput.value = student.student_id;
                 deleteIdSpan.innerText = student.student_id;
@@ -359,7 +401,6 @@ window.addEventListener('DOMContentLoaded', async ()=>{
     document.querySelector('#delete-student-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const student_id = document.querySelector('#delete-student-id').value;
-        console.log(student_id);
         HideModal('delete-student-modal-container')
         const url = window.origin + '/students/delete'
         const data ={
