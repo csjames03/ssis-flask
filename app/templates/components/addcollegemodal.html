@@ -1,0 +1,19 @@
+<form class="add-college-modal-container" id="add-college-modal-container">
+    <p>Add College Modal</p>
+    <div>
+        <div class="add-college-modal-row-input-container">
+            <input type="text" name="college_code" id="college_code_add" placeholder="College Code">
+        </div>
+
+        <div class="add-college-modal-row-input-container">
+            <input type="text" name="college_name" id="college_name_add" placeholder="College name">
+        </div>
+        <div class="add-college-modal-row-input-container">
+            <input type="submit" value="Submit" id="add_course_submit_button">
+            <div id="add_course_cancel_button">Cancel</div>
+        </div>
+        <div class="add-college-close" id="add-college-close">
+            <img src="{{url_for('static', filename='images/closeIcon.png')}}" alt="Close Icon">
+        </div>
+    </div>
+</form>
