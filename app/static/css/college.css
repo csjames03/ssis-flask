@@ -110,6 +110,7 @@
 }
 
 
+.delete-college-close,
 .edit-college-close,
 .add-college-close{
     position: absolute;
@@ -142,25 +143,32 @@
     background-color: var(--red);
 }
 
+#delete_college_button,
 #edit_college_submit_button,
 #add_college_submit_button{
     background-color: var(--green);
 }
+
+
+#delete_college_button:hover,
 #edit_college_submit_button:hover,
 #add_college_submit_button:hover{
     background-color: #137447;
 }
 
+#delete_college_cancel_button:hover,
 #edit_college_cancel_button:hover,
 #add_college_cancel_button:hover{
     background-color: #9e2733;
 }
+
+#delete_college_cancel_button,
 #edit_college_cancel_button,
 #add_college_cancel_button{
     background-color: var(--red);
 }
 
-#delete_college_cancel_button,
+#delete_college_button,#delete_college_cancel_button,
 #edit_college_submit_button, #edit_college_cancel_button,
 #add_college_submit_button, #add_college_cancel_button{
     width: 100%;

@@ -21,6 +21,13 @@ document.querySelector('#edit_college_cancel_button').addEventListener('click', 
     HideModal('edit-college-modal-container')
 })
 
+document.querySelector('#delete-college-close').addEventListener('click', ()=>{
+    HideModal('delete-college-modal-container')
+})
+
+document.querySelector('#delete_college_cancel_button').addEventListener('click', ()=>{
+    HideModal('delete-college-modal-container')
+})
 
 collegeAddForm.addEventListener('submit', async(event)=>{
     event.preventDefault();
