@@ -64,7 +64,6 @@ const searchqueryForm = document.querySelector('#search')
                 containers.forEach(container => container.remove());
             
                 const colleges = await request.json();
-                console.log(colleges)
                 colleges.forEach(college => AddCollegeCard(college.college_code, college.college_name, college.course_count));
                 AddEditEventListener(colleges)
                 AddDeleteEventListener(colleges)
@@ -218,7 +217,6 @@ async function GetCollegeCode(){
 GetCollegeCode()
 
 async function AddEditEventListener(colleges){
-    console.log(colleges)
     for (let i = 0; i < colleges.length; i++) {
         //edit-college-{{college.college_code}}
         let element = document.querySelector(`#edit-college-${colleges[i].college_code}`);
@@ -237,7 +235,6 @@ async function AddEditEventListener(colleges){
 
 
 async function AddDeleteEventListener(colleges){
-    console.log(colleges)
     for (let i = 0; i < colleges.length; i++) {
         let element = document.querySelector(`#delete-college-${colleges[i].college_code}`);
         if (element) {
