@@ -156,6 +156,7 @@ async function GetCourseCodes(){
     if(response.ok){
         const res = await response.json()
         AddEditEventListener(res)
+        AddDeleteEventListener(res)
         return
     }
 }
@@ -176,6 +177,23 @@ async function AddEditEventListener(colleges){
             });
         } else {
             console.warn(`Element #edit-college-${colleges[i].college_code} not found.`);
+        }
+    }
+}
+
+
+async function AddDeleteEventListener(colleges){
+    console.log(colleges)
+    for (let i = 0; i < colleges.length; i++) {
+        let element = document.querySelector(`#delete-college-${colleges[i].college_code}`);
+        if (element) {
+            element.addEventListener('click', async () => {
+                ShowModal('delete-college-modal-container');
+                document.querySelector(`#delete-id-college-span`).innerText = `${colleges[i].college_code}`
+                document.querySelector(`#delete-college-id`).value = `${colleges[i].college_code}`
+            });
+        } else {
+            console.warn(`Element #edit-college-${colleges[i].course_code} not found.`);
         }
     }
 }
@@ -207,4 +225,54 @@ async function getCollegeFromDatabase(code) {
     // If the request was not successful, return null
     return null;
   }
+  
+// Submit Edit 
+
+document.querySelector('#edit-college-modal-container').addEventListener('submit', async (event) => {
+    event.preventDefault();
+  
+    const code = document.querySelector('#college_code_edit').value;
+    const name = document.querySelector('#college_name_edit').value
+    const dbData = await getCollegeFromDatabase(code);
+    console.log(dbData);
+
+    if(name === ""){
+        ModalError('edit-college-modal-container')
+        Error('Please enter a College Name')
+        return
+    }else if (name === dbData.college_name){
+        ModalError('edit-college-modal-container')
+        Error('Nothings Changed')
+        return
+
+    }
+
+    const url = window.origin + '/colleges/edit'
+    const data = {
+        college_code: code,
+        college_name: name
+    }
+
+    const request = await fetch(url,{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+
+    if(request.ok){
+        const req = await request.json();
+        Success(req.message)
+        HideModal('edit-college-modal-container')
+        console.log( document.querySelector(`#college-name-${data.college_code}`))
+        document.querySelector(`#college-name-${data.college_code}`).innerHTML = `
+        ${name} <span>(${code})</span>
+        `
+        return
+    }
+    else{
+        const req = request.json();
+        Error(req.message)
+        ModalError('edit-college-modal-container')
+    }
+  });
   

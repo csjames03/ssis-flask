@@ -72,7 +72,7 @@ class Colleges:
         except Exception as e:
             return {"message": e}, 500
 
-    def edit_college(self, college_name, college_code):
+    def edit_college(self, college_code, college_name):
         cursor = mysql.new_cursor(dictionary=True)
         try:
             cursor = mysql.new_cursor(dictionary=True)
