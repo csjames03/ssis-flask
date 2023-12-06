@@ -62,6 +62,7 @@ collegeAddForm.addEventListener('submit', async(event)=>{
         Success(request.message)
         HideModal('add-college-modal-container')
         AddCollegeCard(data.college_code, data.college_name)
+        GetCollegeCode()
         return
     }
     const request = await req.json()
@@ -130,11 +131,12 @@ function AddCollegeCard(collegeCode, collegeName){
     const mainContainer = document.querySelector('.college-main-container')
     const container = document.createElement('div')
     container.classList.add('college-container')
+    container.id=`college-container-${collegeCode}`
     container.innerHTML =`
-    <div class="college-clippath">
+    <div class="college-clippath" >
             </div>
             <div class="college-details">
-                <p>${collegeName} <span>(${collegeCode})</span></p>
+                <p id="college-name-${collegeCode}">${collegeName} <span>(${collegeCode})</span></p>
                 <p>Course Count: 0</p>
             </div>
             <div class="college-action">
@@ -151,7 +153,7 @@ function AddCollegeCard(collegeCode, collegeName){
 }
 
 
-async function GetCourseCodes(){
+async function GetCollegeCode(){
     const url = window.origin + '/colleges/all'
     const response = await fetch(url,{
         method: 'POST',
@@ -168,7 +170,7 @@ async function GetCourseCodes(){
     }
 }
 
-GetCourseCodes()
+GetCollegeCode()
 
 async function AddEditEventListener(colleges){
     console.log(colleges)
