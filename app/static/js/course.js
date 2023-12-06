@@ -68,7 +68,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             
                 const courses = await request.json();
                 console.log(courses)
-                courses.forEach(course => AddCourseCard(course.course_code, course.course_name, course.college_code));
+                courses.forEach(course => AddCourseCard(course.course_code, course.course_name, course.college_code, course.student_count));
                 GetCourseCodes()
                 return
             }
@@ -178,7 +178,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             document.querySelector(`#${id}`).classList.remove('hide-modal')
         }
 
-        function AddCourseCard(course_code, course_name, college_name){
+        function AddCourseCard(course_code, course_name, college_name, student_count=0){
             const mainContainer = document.querySelector('.course-main-container')
             const container = document.createElement('div')
             container.classList.add('course-container')
@@ -189,6 +189,9 @@ window.addEventListener('DOMContentLoaded', async ()=>{
                 </div>
                 <div class="course-title-container">
                     <p id="course-course-name-${course_code}">${course_name}</p>
+                    <div class="student-count-container">
+                            <p>Students Enrolled: ${student_count}</p>
+                        </div>
                 </div>
                 <div class="course-action">
                     <div class="edit-icon-course-container" id="edit-course-${course_code}">

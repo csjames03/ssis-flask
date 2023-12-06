@@ -120,15 +120,24 @@ class Colleges:
             if not columns:
                 return {"message": "No columns found in the college table"}, 500
 
-            conditions = " OR ".join([f"{column} LIKE %s" for column in columns])
-            query = f"SELECT * FROM college WHERE {conditions}"
-
             # Use the LIKE operator to search for the specified term in each column
-            cursor.execute(query, tuple(["%" + search_term + "%"] * len(columns)))
+            conditions = " OR ".join(
+                [f"college.{column} LIKE %s" for column in columns]
+            )
+
+            query = f"""
+                SELECT college.*, COUNT(course.college_code) AS course_count
+                FROM college
+                LEFT JOIN course ON college.college_code = course.college_code
+                WHERE {conditions}
+                GROUP BY college.college_code, course.course_code
+            """
+
+            # Use a tuple to provide the search term for each LIKE condition
+            search_terms = tuple(["%" + search_term + "%"] * len(columns))
+            cursor.execute(query, search_terms)
 
             data = cursor.fetchall()
             return data, 200
         except Exception as e:
             return {"message": str(e)}, 500
-        finally:
-            cursor.close()

@@ -66,9 +66,9 @@ def delete_college():
 def search_college():
     req = request.json
     query = req["query"]
-    print(query)
     course = college_model.search_college_across_columns(query)
     message = course[0]
     status_code = course[1]
+    print(message)
 
     return message, status_code

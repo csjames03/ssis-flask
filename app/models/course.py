@@ -100,8 +100,15 @@ class Courses:
             if not columns:
                 return {"message": "No columns found in the course table"}, 500
 
-            conditions = " OR ".join([f"{column} LIKE %s" for column in columns])
-            query = f"SELECT * FROM course WHERE {conditions}"
+            # Include student_count from student table
+            conditions = " OR ".join([f"course.{column} LIKE %s" for column in columns])
+            query = f"""
+                SELECT course.*, COUNT(student.course_code) AS student_count
+                FROM course
+                LEFT JOIN student ON course.course_code = student.course_code
+                WHERE {conditions}
+                GROUP BY course.course_code
+            """
 
             # Use the LIKE operator to search for the specified term in each column
             cursor.execute(query, tuple(["%" + search_term + "%"] * len(columns)))
@@ -110,5 +117,3 @@ class Courses:
             return data, 200
         except Exception as e:
             return {"message": str(e)}, 500
-        finally:
-            cursor.close()

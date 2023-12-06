@@ -64,7 +64,7 @@ const searchqueryForm = document.querySelector('#search')
             
                 const colleges = await request.json();
                 console.log(colleges)
-                colleges.forEach(college => AddCollegeCard(college.college_code, college.college_name));
+                colleges.forEach(college => AddCollegeCard(college.college_code, college.college_name, college.course_count));
                 AddEditEventListener(colleges)
                 AddDeleteEventListener(colleges)
                 return
@@ -171,7 +171,7 @@ function Error(message){
 }
 
 
-function AddCollegeCard(collegeCode, collegeName){
+function AddCollegeCard(collegeCode, collegeName, courseCount = 0){
     const mainContainer = document.querySelector('.college-main-container')
     const container = document.createElement('div')
     container.classList.add('college-container')
@@ -181,6 +181,7 @@ function AddCollegeCard(collegeCode, collegeName){
             </div>
             <div class="college-details">
                 <p id="college-name-${collegeCode}">${collegeName} <span>(${collegeCode})</span></p>
+                <p class="course-count">Course Count: ${courseCount}</p>
             </div>
             <div class="college-action">
                 <div class="edit-icon-college-container" id="edit-college-${collegeCode}">
