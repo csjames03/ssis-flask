@@ -11,6 +11,12 @@
     padding-bottom: 20px;
 }
 
+.edit-college-modal-container p,
+.add-college-modal-container p{
+    font-size: 30px;
+    font-weight: bolder;
+}
+
 .add-college-modal-button{
     padding: 10px 20px;
     display: flex;
@@ -51,6 +57,9 @@
     bottom: 0;
     right: 0;;
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
 }
 
 .college-details p span{
@@ -180,3 +189,9 @@
     color: var(--white);
     cursor: pointer;
 } 
+
+
+.course-count{
+    font-size: 10px;
+    color: gray;
+}

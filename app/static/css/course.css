@@ -34,6 +34,18 @@
   box-shadow: 0 8px 16px 0 rgba(106, 78, 78, 0.2);
 }
 
+.edit-course-modal-container p,
+.add-course-modal-container p{
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+
+.student-count-container{
+    position: absolute;
+    right: 5%;
+    bottom: 2%;
+}
 
 .course-card-title{
     width: 100%;
@@ -62,14 +74,14 @@
     font-size: 8px;
 }
 
-.student-count-container{
+.course-count-container{
     position: absolute;
     bottom: 0;
     right: 0;
     margin-bottom: 5px;
     margin-right: 5px;
 }
-.student-count-container p{
+.course-count-container p{
     color: gray;
     letter-spacing: .015rem;
     font-size: 10px;
@@ -234,4 +246,9 @@
 #delete-id-course-span{
     color: var(--red);
     font-weight: bold;
+}
+
+.student-count-container p{
+    font-size: 10px;
+    color: gray;
 }
