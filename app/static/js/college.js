@@ -276,3 +276,32 @@ document.querySelector('#edit-college-modal-container').addEventListener('submit
     }
   });
   
+
+  document.querySelector('#delete-college-form').addEventListener('submit', async(event) =>{
+    event.preventDefault()
+
+    const code = document.querySelector('#delete-college-id').value
+    const url = window.origin + '/colleges/delete'
+    const data = {
+        college_code: code,
+    }
+
+    const req = await fetch(url,{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+
+    if(req.ok){
+        const request = await req.json()
+        Success(request.message)
+        HideModal('delete-college-modal-container')
+        document.querySelector(`#college-container-${data.college_code}`).style.display = 'none'
+        return
+    }
+    const request = await req.json()
+    Error(request.message)
+    HideModal('delete-college-modal-container')
+    ModalError('delete-college-modal-container')
+    return
+  })

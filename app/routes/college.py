@@ -24,7 +24,6 @@ def get_all_colleges():
 def get_college():
     req = request.json
     college_code = req["college_code"]
-    print(college_code)
     college = college_model.get_college(college_code)
     data = college[0]
 
@@ -48,6 +47,16 @@ def edit_college():
     college_code = req["college_code"]
     college_name = req["college_name"]
     college = college_model.edit_college(college_code, college_name)
+    message = college[0]
+    status_code = college[1]
+    return message, status_code
+
+
+@colleges.route("/delete", methods=["POST"])
+def delete_college():
+    req = request.json
+    college_code = req["college_code"]
+    college = college_model.delete_college(college_code)
     message = college[0]
     status_code = college[1]
     return message, status_code
