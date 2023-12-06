@@ -12,7 +12,7 @@ college_model = Colleges()
 def show_colleges():
     colleges = college_model.get_colleges()
     print(colleges)
-    return render_template("student.html", colleges=colleges)
+    return render_template("college.html", colleges=colleges)
 
 
 @colleges.route("/get", methods=["POST"])

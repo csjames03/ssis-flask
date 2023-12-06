@@ -1,0 +1,99 @@
+.college-main-container{
+    width: 60vw;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow-y: auto;
+    padding-top: 290px;
+    gap: 20px;
+    padding-bottom: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    
+}
+
+.add-college-modal-button{
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background-color: var(--green);
+    right: -1%;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.add-college-modal-button:hover{
+    padding: 10px 40px;
+    transition-duration: 250ms;
+    transition-timing-function: ease-out;
+}
+
+.college-container{
+    width: 100%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    min-height: 145px;
+    position: relative;
+    background: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.college-clippath{
+    width: 100%;
+    background-image: url("../images/college.jpg");
+    height: 100%;
+    clip-path: polygon(50% 0%, 100% 0, 100% 1%, 60% 35%, 15% 65%, 0 100%, 0 0);
+}
+.college-details{
+    position: absolute;
+    bottom: 0;
+    right: 0;;
+    margin: 10px;
+}
+
+.college-details p span{
+    font-weight: bolder;
+}
+
+.college-action{
+    width: 100px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    gap: 5px;
+    position: absolute;
+    top: -10%;
+    right: 0;
+    justify-content: space-around;
+}
+
+.edit-icon-college-container{
+    background-color: var(--green);
+
+}
+.delete-icon-college-container, .edit-icon-college-container{
+    padding: 7px 10px;
+    border-radius: 5px;
+}
+.delete-icon-college-container{
+    background-color: var(--red);
+}
+
+.edit-icon-college-container:hover{
+    background-color: #137447;
+}
+
+.delete-icon-college-container:hover{
+    background-color: #9e2733;
+}
+.college-action div img{
+    width: 15px;
+}

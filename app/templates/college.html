@@ -1,5 +1,32 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<div class="college-main-container">
+    <div class="add-college-modal-button" id="add-college-modal-button">
+        Add College
+    </div>
+
+    {% for college in colleges %}
+        <div class="college-container">
+            <div class="college-clippath">
+            </div>
+            <div class="college-details">
+                <p>{{college.college_name}} <span>({{college.college_code}})</span></p>
+                <p>Course Count: {{college.course_count}}</p>
+            </div>
+            <div class="college-action">
+                <div class="edit-icon-college-container" id="edit-college-{{college.college_code}}">
+                    <img src="{{url_for('static', filename='images/editIcon.png')}}" alt="Edit Icon">
+                </div>
+                <div class="delete-icon-college-container" id="delete-college-{{college.college_code}}">
+                    <img src="{{url_for('static', filename='images/deleteIcon.png')}}" alt="Delete Icon">
+                </div>
+            </div>
+        </div>
+    {% endfor%}
+
+
+</div>
+
     
 {% endblock %}

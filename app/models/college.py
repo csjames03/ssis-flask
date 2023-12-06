@@ -4,7 +4,9 @@ from app import mysql
 class Colleges:
     def get_colleges(self):
         cursor = mysql.new_cursor(dictionary=True)
-        cursor.execute("SELECT * FROM college")
+        cursor.execute(
+            "SELECT college.*, COUNT(course.college_code) AS course_count FROM college LEFT JOIN course ON college.college_code = course.college_code GROUP BY college.college_code;"
+        )
         data = cursor.fetchall()
         return data
 
