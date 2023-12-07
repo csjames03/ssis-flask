@@ -70,21 +70,36 @@ def add_students():
 
 @students.route("/edit", methods=["POST"])
 def edit_student():
-    req = request.json
-    student_id = req["student_id"]
-    first_name = req["first_name"]
-    last_name = req["last_name"]
-    gender = req["sex"]
-    year_level = req["year_level"]
-    course_code = req["course_code"]
-    student = students_model.edit_student(
-        student_id, first_name, last_name, gender, year_level, course_code
-    )
+    student_id = request.form.get("student_id")
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    gender = request.form.get("sex")
+    year_level = request.form.get("year_level")
+    course_code = request.form.get("course_code")
+    if "img_url" in request.files:
+        file = request.files["img_url"]
+        print(file)
+        # Upload the image to Cloudinary
+        upload_result = upload(file)
 
+        # Access the Cloudinary URL of the uploaded image
+        cloudinary_url = upload_result["secure_url"]
+        # Handle the file as needed (e.g., save it to disk, process it, etc.)
+    else:
+        last_image_url = request.form.get("last_image_url")
+        cloudinary_url = last_image_url
+
+    img_url = cloudinary_url
+    student = students_model.edit_student(
+        student_id, first_name, last_name, gender, year_level, course_code, img_url
+    )
+    print(
+        f"Routes: { student_id, first_name, last_name, gender, year_level, course_code, img_url}"
+    )
     message = student[0]
     status_code = student[1]
 
-    return message, status_code
+    return {"message": message, "img_url": img_url}, status_code
 
 
 @students.route("/delete", methods=["POST"])

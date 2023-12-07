@@ -65,28 +65,37 @@ class Students:
             return {"message": "Error adding student"}, 500
 
     def edit_student(
-        self, student_id, first_name, last_name, gender, year_level, course_code
+        self,
+        student_id,
+        first_name,
+        last_name,
+        gender,
+        year_level,
+        course_code,
+        img_url,
     ):
         try:
             cursor = mysql.new_cursor(dictionary=True)
 
             cursor.execute(
-                """UPDATE student SET first_name = %s, last_name = %s, course_code = %s, year_level = %s, sex = %s WHERE student_id = %s""",
+                """UPDATE student SET first_name = %s, last_name = %s, course_code = %s, year_level = %s, sex = %s, img_url = %s WHERE student_id = %s""",
                 (
                     first_name,
                     last_name,
                     course_code,
                     year_level,
                     gender,
+                    img_url,
                     student_id,
                 ),
             )
 
             mysql.connection.commit()
-
+            print(f"Models: {img_url}")
             return {"message": "Student edited successfully"}, 201
 
         except Exception as e:
+            print(e)
             return {"message": "Error editing student"}, 500
 
     def delete_student(self, student_id):

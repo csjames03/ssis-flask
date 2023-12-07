@@ -310,8 +310,16 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         HideModal('edit-student-modal-container')
     })
 
+    document.querySelector('#edit-fileInput').addEventListener('change',()=>{
+        const editfileInput = document.querySelector('#edit-fileInput')
+        const avatar = document.getElementById('edit-avatar')
+        avatar.src = URL.createObjectURL(editfileInput.files[0]);
+    })
+
     editStudentContainer.addEventListener('submit', async (event)=>{
         event.preventDefault()
+        const editfileInput = document.querySelector('#edit-fileInput')
+        const avatar = document.getElementById('edit-avatar')
         const editedGender = maleGenderInputEdit.checked ? ('Male') : ('Female')
         const studentUneditedInfo = await getStudentInfoFromDatabase(idInputEdit.value)
         if(fnameInputEdit.value === '' || lnameInputEdit.value === "" || editedGender === "" || yearLevelInputEdit.value === "" || courseInputEdit.value === "" ){
@@ -319,38 +327,39 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             ModalError('edit-student-modal-container')
             return
         }
-        else if(fnameInputEdit.value === studentUneditedInfo.first_name && lnameInputEdit.value === studentUneditedInfo.last_name && editedGender === studentUneditedInfo.sex && yearLevelInputEdit.value === studentUneditedInfo.year_level && courseInputEdit.value === studentUneditedInfo.course_code ){
+        else if(!editfileInput.files[0] && fnameInputEdit.value === studentUneditedInfo.first_name && lnameInputEdit.value === studentUneditedInfo.last_name && editedGender === studentUneditedInfo.sex && yearLevelInputEdit.value === studentUneditedInfo.year_level && courseInputEdit.value === studentUneditedInfo.course_code ){
             Error('Nothings Changed!')
             ModalError('edit-student-modal-container')
             return
         }
-        const data = {
-            student_id: idInputEdit.value,
-            first_name: fnameInputEdit.value,
-            last_name: lnameInputEdit.value,
-            sex: editedGender,
-            course_code: courseInputEdit.value,
-            year_level: yearLevelInputEdit.value,
-        }
+        //ParaEdit
+        const formData = new FormData()
+        formData.append('student_id', idInputEdit.value)
+        formData.append('first_name', fnameInputEdit.value)
+        formData.append('last_name', lnameInputEdit.value)
+        formData.append('sex', editedGender)
+        formData.append('course_code', courseInputEdit.value)
+        formData.append('year_level', yearLevelInputEdit.value)
+        formData.append('img_url', editfileInput.files[0])
+        formData.append('last_image_url', studentUneditedInfo.img_url)
         const url = window.origin + '/students/edit'
         const response = await fetch(url, {
             method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: formData
         });
         
         
         if(response.ok){
             const res = await response.json()
-            Success(`Student ${data.student_id} was successfully updated`)
+            Success(`Student ${formData.student_id} was successfully updated`)
             HideModal('edit-student-modal-container')
             //Update the Card Here
-            UpdateStudentCardInformation(data.student_id, data.first_name, data.last_name, data.sex, data.year_level, data.course_code)
+            UpdateStudentCardInformation(idInputEdit.value, fnameInputEdit.value, lnameInputEdit.value,editedGender, yearLevelInputEdit.value, courseInputEdit.value, res.img_url)
             return
         }
 
         const res = await response.json()
-        Error(`Student ${data.student_id} was unsuccessfully updated.`)
+        Error(`Student ${formData.student_id} was unsuccessfully updated.`)
 
 
         
@@ -390,10 +399,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         }
         
 
-    function UpdateStudentCardInformation(id, first_name, last_name, gender, year, course){
-        const avatar = document.querySelector(`#student-avatar-${id}`)
-        gender === 'Male' ? (avatar.src = '/static/images/boy.png') : (avatar.src = '/static/images/girl.png')
-
+    function UpdateStudentCardInformation(id, first_name, last_name, gender, year, course, img_url){
+        document.getElementById(`student-avatar-${id}`).src = img_url
         //inserting Full Name
         document.querySelector(`#student-fullname-${id}`).innerText = `${first_name} ${last_name}`
 
@@ -461,10 +468,9 @@ window.addEventListener('DOMContentLoaded', async ()=>{
     }
 
     const fileInput = document.getElementById('fileInput');
-        const avatar = document.querySelector('#avatar');
+    const avatar = document.querySelector('#avatar');
 
         fileInput.addEventListener('change', ()=>{
-            console.log('Uploading')
             avatar.src = URL.createObjectURL(fileInput.files[0]);
         })
 
