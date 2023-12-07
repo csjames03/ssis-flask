@@ -113,24 +113,3 @@ def search_student():
 @students.route("/upload")
 def upload_images():
     return render_template("upload.html")
-
-
-@students.route("/uploads", methods=["POST"])
-def upload_image():
-    try:
-        uploaded_file = request.files["img"]
-        print(uploaded_file)
-        # Process the uploaded file as needed
-        # For example, save the file to a specific directory
-        uploaded_file.save("app/static/images/" + uploaded_file.filename)
-
-        # Upload to Cloudinary using a file-like object
-        with open("app/static/images/" + uploaded_file.filename, "rb") as file_content:
-            response = cloudinary.uploader.upload(file_content)
-
-        # Perform other actions with the Cloudinary response
-
-        return jsonify({"message": "Upload success"})
-    except Exception as e:
-        print(str(e))
-        return jsonify({"error": str(e)}), 500

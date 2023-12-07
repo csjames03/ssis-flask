@@ -72,22 +72,32 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         if(studentIdWithoutSpaces.length === 0){
             ModalError('add-student-modal-container')
             Error('Student ID is empty!')
+            document.querySelector('#add_student_submit_button').disabled = false;
+            document.querySelector('#add_student_submit_button').value = 'Submit'
             return
         }else if(studentIdWithoutSpaces[4] != '-' || studentIdYear.length != 4 || studentIdNumber.length != 4 ) {
             ModalError('add-student-modal-container')
             Error('Student ID is not in the correct format!')
+            document.querySelector('#add_student_submit_button').disabled = false;
+            document.querySelector('#add_student_submit_button').value = 'Submit'
             return 
         }else if(firstname.value.length === 0){
             ModalError('add-student-modal-container')
             Error('Student Firstname is empty!')
+            document.querySelector('#add_student_submit_button').disabled = false;
+            document.querySelector('#add_student_submit_button').value = 'Submit'
             return
         }else if(lastname.value.length === 0){
             ModalError('add-student-modal-container')
             Error('Student Lastname is empty!')
+            document.querySelector('#add_student_submit_button').disabled = false;
+            document.querySelector('#add_student_submit_button').value = 'Submit'
             return
         }else if ( gender == null){
             ModalError('add-student-modal-container')
             Error('Please select a gender')
+            document.querySelector('#add_student_submit_button').disabled = false;
+            document.querySelector('#add_student_submit_button').value = 'Submit'
             return
         }
          
