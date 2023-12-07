@@ -27,7 +27,14 @@ class Students:
             return False
 
     def add_student(
-        self, student_id, first_name, last_name, gender, year_level, course_code
+        self,
+        student_id,
+        first_name,
+        last_name,
+        gender,
+        year_level,
+        course_code,
+        img_url,
     ):
         if self.is_student_id_taken(student_id):
             return {"message": "Student ID is already taken"}, 400
@@ -36,10 +43,18 @@ class Students:
 
             cursor.execute(
                 """
-                INSERT INTO student (student_id, first_name, last_name, course_code, year_level, sex)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO student (student_id, first_name, last_name, course_code, year_level, sex, img_url)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
-                (student_id, first_name, last_name, course_code, year_level, gender),
+                (
+                    student_id,
+                    first_name,
+                    last_name,
+                    course_code,
+                    year_level,
+                    gender,
+                    img_url,
+                ),
             )
 
             mysql.connection.commit()

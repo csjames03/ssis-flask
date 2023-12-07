@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         
             const students = await request.json();
         
-            students.forEach(student => AppendStudentCard(student.student_id, student.first_name, student.last_name, student.sex, student.year_level, student.course_code));
+            students.forEach(student => AppendStudentCard(student.student_id, student.first_name, student.last_name, student.sex, student.year_level, student.course_code, student.img_url));
             AddDeleteEvents(students);
             AddEditEvents(students);
         }
@@ -56,6 +56,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
 
     addStudentContainer.addEventListener('submit',async (event)=>{
         event.preventDefault()
+        document.querySelector('#add_student_submit_button').disabled = true;
+        document.querySelector('#add_student_submit_button').value = 'Uploading...'
         const studentId =  document.querySelector('#student_id_add')
         const studentIdWithoutSpaces = studentId.value.trim();
         const firstname =  document.querySelector('#first_name_add')
@@ -65,6 +67,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         const gender = getSelectedRadioValue('student_gender_add')
         const studentIdYear = studentIdWithoutSpaces.split('-')[0]
         const studentIdNumber = studentIdWithoutSpaces.split('-')[1]
+        const fileInput = document.getElementById('fileInput');
 
         if(studentIdWithoutSpaces.length === 0){
             ModalError('add-student-modal-container')
@@ -97,24 +100,36 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             year_level: yearlevel.value,
             course_code: course.value,
           };
+        const formData = new FormData();
+        formData.append('img', fileInput.files[0] || document.querySelector('#avatar').src);
+        formData.append('student_id', studentIdWithoutSpaces)
+        formData.append('first_name', firstname.value)
+        formData.append('last_name', lastname.value)
+        formData.append('gender', gender)
+        formData.append('year_level', yearlevel.value)
+        formData.append('course_code', course.value)
+
         const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: formData,
         })
 
         if(response.ok){
             const res = await response.json()
             ModalSuccess()
             Success(res.message)
-            AppendStudentCard(data.student_id, data.first_name, data.last_name, data.gender, data.year_level, data.course_code)
+            AppendStudentCard(data.student_id, data.first_name, data.last_name, data.gender, data.year_level, data.course_code, res.img_url)
             StudentEditInfoGetter()
+            document.querySelector('#add_student_submit_button').disabled = false;
+            document.querySelector('#add_student_submit_button').value = 'Submit'
             return
         }
         
         const res = await response.json()
         ModalError('add-student-modal-container')
         Error(res.message)
+        document.querySelector('#add_student_submit_button').disabled = false;
+        document.querySelector('#add_student_submit_button').value = 'Submit'
         return  
         
     })
@@ -194,16 +209,14 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         return null;
       }
       
-    function AppendStudentCard(id, fname, lname, gender, year, course){
+    function AppendStudentCard(id, fname, lname, gender, year, course, img_url){
         const div = document.createElement('div')
         const container = document.querySelector('.student-main-container')
         div.id = `student-info-container-${id}`
         div.classList.add('student-info-container')
         div.innerHTML =`
-                    ${ gender === 'Male' ?
-                    (`<img class="student-avatar" id="student-avatar-${id}" src="/static/images/boy.png" alt="Boy Icon">`):(`
-                        <img class="student-avatar"  id="student-avatar-${id}" src="/static/images/girl.png" alt="Girl Icon">  
-                    `)}
+                    <img class="student-avatar" id="student-avatar-${id}" src="${img_url}" alt="Avatar Icon">
+                    
                     
                     <p  id="student-fullname-${id}">${fname} ${lname}</p>
                     <p  id="student-sex-${id}">${gender}</p>
@@ -260,6 +273,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             document.querySelector(`#edit-student-${student.student_id}`).addEventListener('click',async ()=>{
                 ShowModal('edit-student-modal-container')
                 const newStudentInfo = await getStudentInfoFromDatabase(student.student_id)
+                console.log(newStudentInfo.img_url)
+                document.querySelector(`#edit-avatar`).src = newStudentInfo.img_url
                 idInputEdit.value = newStudentInfo.student_id
                 fnameInputEdit.value = newStudentInfo.first_name
                 lnameInputEdit.value = newStudentInfo.last_name
@@ -434,4 +449,15 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         }, 1200)
     }
     }
+
+    const fileInput = document.getElementById('fileInput');
+        const avatar = document.querySelector('#avatar');
+
+        fileInput.addEventListener('change', ()=>{
+            console.log('Uploading')
+            avatar.src = URL.createObjectURL(fileInput.files[0]);
+        })
+
+
+
 })

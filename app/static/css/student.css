@@ -246,6 +246,28 @@
     color: var(--red);
 }
 
+.add-student-modal-row-profile-container{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+
+.add-student-modal-row-profile-container img{
+    width: 90px; height: 90px;
+}
+
+.add-student-modal-row-profile-container label{
+    padding:1px;
+    cursor: pointer;
+    font-size: small;
+    font-weight: bolder;
+}
+
+
 .hide-this-card{
     animation-name: SlideHorizontal;
     animation-duration: 1200ms;

@@ -41,6 +41,7 @@ def initialize_database():
             course_code VARCHAR(20) NOT NULL,
             year_level VARCHAR(3) NOT NULL,
             sex VARCHAR(10) NOT NULL,
+            img_url VARCHAR(255),  -- Adjust the length according to your needs
             FOREIGN KEY (course_code) REFERENCES course(course_code) ON DELETE CASCADE ON UPDATE CASCADE
         );
 
@@ -141,39 +142,17 @@ def initialize_database():
         ('HIST', 'History', 'CSSP');
 
 
-INSERT INTO student (student_id, first_name, last_name, course_code, year_level, sex) VALUES
-    ('2023-2001', 'Alice', 'Johnson', 'BSCS', '1st', 'Female'),
-    ('2023-2002', 'Bob', 'Smith', 'BSIT', '2nd', 'Male'),
-    ('2023-2003', 'Charlie', 'Miller', 'BSCA', '3rd', 'Male'),
-    ('2023-2004', 'David', 'Williams', 'COMM', '4th', 'Male'),
-    ('2023-2005', 'Emily', 'Davis', 'BSCA', '1st', 'Female'),
-    ('2023-2006', 'Frank', 'Jones', 'MKTG', '2nd', 'Male'),
-    ('2023-2007', 'Grace', 'Moore', 'URB', '3rd', 'Female'),
-    ('2023-2008', 'Henry', 'Lee', 'TECH', '4th', 'Male'),
-    ('2023-2009', 'Isaac', 'Brown', 'STAT', '1st', 'Male'),
-    ('2023-2010', 'Jessica', 'Johnson', 'CMSC', '2nd', 'Female'),
-    -- Add 40 more records with unique student_id and course_code values
-    ('2023-2011', 'Karen', 'Miller', 'BSCS', '3rd', 'Female'),
-    ('2023-2012', 'Liam', 'Smith', 'BSIT', '4th', 'Male'),
-    ('2023-2013', 'Megan', 'Davis', 'BSCA', '1st', 'Female'),
-    ('2023-2014', 'Noah', 'Johnson', 'COMM', '2nd', 'Male'),
-    ('2023-2015', 'Olivia', 'Williams', 'BSCA', '3rd', 'Female'),
-    ('2023-2016', 'Peter', 'Jones', 'MKTG', '4th', 'Male'),
-    ('2023-2017', 'Quinn', 'Moore', 'URB', '1st', 'Female'),
-    ('2023-2018', 'Ryan', 'Lee', 'TECH', '2nd', 'Male'),
-    ('2023-2019', 'Samantha', 'Brown', 'STAT', '3rd', 'Female'),
-    ('2023-2020', 'Thomas', 'Miller', 'CMSC', '4th', 'Male'),
-    -- Continue adding more records as needed
-    ('2023-2021', 'Ursula', 'Smith', 'BSCS', '1st', 'Female'),
-    ('2023-2022', 'Victor', 'Davis', 'BSIT', '2nd', 'Male'),
-    ('2023-2023', 'Wendy', 'Johnson', 'BSCA', '3rd', 'Female'),
-    ('2023-2024', 'Xander', 'Williams', 'COMM', '4th', 'Male'),
-    ('2023-2025', 'Yasmine', 'Jones', 'BSCA', '1st', 'Female'),
-    ('2023-2026', 'Zane', 'Moore', 'MKTG', '2nd', 'Male'),
-    ('2023-2027', 'Abigail', 'Lee', 'URB', '3rd', 'Female'),
-    ('2023-2028', 'Benjamin', 'Brown', 'TECH', '4th', 'Male'),
-    ('2023-2029', 'Catherine', 'Miller', 'STAT', '1st', 'Female'),
-    ('2023-2030', 'Daniel', 'Johnson', 'CMSC', '2nd', 'Male');
+INSERT INTO student (student_id, first_name, last_name, course_code, year_level, sex, img_url) VALUES
+    ('2023-2001', 'Alice', 'Johnson', 'BSCS', '1st', 'Female', 'https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2002', 'Bob', 'Smith', 'BSIT', '2nd', 'Male','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2003', 'Charlie', 'Miller', 'BSCA', '3rd', 'Male','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2004', 'David', 'Williams', 'COMM', '4th', 'Male','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2005', 'Emily', 'Davis', 'BSCA', '1st', 'Female','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2006', 'Frank', 'Jones', 'MKTG', '2nd', 'Male','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2007', 'Grace', 'Moore', 'URB', '3rd', 'Female','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2008', 'Henry', 'Lee', 'TECH', '4th', 'Male','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2009', 'Isaac', 'Brown', 'STAT', '1st', 'Male','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png'),
+    ('2023-2010', 'Jessica', 'Johnson', 'CMSC', '2nd', 'Female','https://res.cloudinary.com/dkjqhuwcn/image/upload/v1701936612/defaut-avatar.png');
     -- Add more records as neededVALUES
         
 
