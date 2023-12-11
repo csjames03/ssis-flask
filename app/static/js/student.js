@@ -319,6 +319,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
 
     editStudentContainer.addEventListener('submit', async (event)=>{
         event.preventDefault()
+        document.getElementById('edit_student_submit_button').value = 'Updating...'
+        document.querySelector('#edit_student_submit_button').disabled = true;
         const editfileInput = document.querySelector('#edit-fileInput')
         const avatar = document.getElementById('edit-avatar')
         const editedGender = maleGenderInputEdit.checked ? ('Male') : ('Female')
@@ -326,11 +328,15 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         if(fnameInputEdit.value === '' || lnameInputEdit.value === "" || editedGender === "" || yearLevelInputEdit.value === "" || courseInputEdit.value === "" ){
             Error('Cannot Leave the input field Empty')
             ModalError('edit-student-modal-container')
+            document.querySelector('#edit_student_submit_button').disabled = false;
+            document.getElementById('edit_student_submit_button').value = 'Submit'
             return
         }
         else if(!editfileInput.files[0] && fnameInputEdit.value === studentUneditedInfo.first_name && lnameInputEdit.value === studentUneditedInfo.last_name && editedGender === studentUneditedInfo.sex && yearLevelInputEdit.value === studentUneditedInfo.year_level && courseInputEdit.value === studentUneditedInfo.course_code ){
             Error('Nothings Changed!')
             ModalError('edit-student-modal-container')
+            document.querySelector('#edit_student_submit_button').disabled = false;
+            document.getElementById('edit_student_submit_button').value = 'Submit'
             return
         }
         //ParaEdit
@@ -354,6 +360,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
             const res = await response.json()
             Success(`Student ${formData.student_id} was successfully updated`)
             HideModal('edit-student-modal-container')
+            document.querySelector('#edit_student_submit_button').disabled = false;
+            document.getElementById('edit_student_submit_button').value = 'Submit'
             //Update the Card Here
             UpdateStudentCardInformation(idInputEdit.value, fnameInputEdit.value, lnameInputEdit.value,editedGender, yearLevelInputEdit.value, courseInputEdit.value, res.img_url)
             return
@@ -361,6 +369,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
 
         const res = await response.json()
         Error(`Student ${formData.student_id} was unsuccessfully updated.`)
+        document.querySelector('#edit_student_submit_button').disabled = false;
+        document.getElementById('edit_student_submit_button').value = 'Submit'
 
 
         
