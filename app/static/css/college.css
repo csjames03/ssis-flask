@@ -52,7 +52,7 @@
     background-position: center;
     background-size: cover;
     height: 100%;
-    clip-path: polygon(50% 0%, 100% 0, 100% 1%, 60% 35%, 15% 65%, 0 100%, 0 0);
+    clip-path: polygon(71% 69%, 100% 0, 0 0, 0 43%, 0 100%, 25% 78%);
 }
 .college-details{
     position: absolute;
