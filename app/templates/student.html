@@ -9,6 +9,7 @@
         {% for student in students %}
 
             <div class="student-info-container" id="student-info-container-{{student.student_id}}">
+                
                 <img class="student-avatar" id="student-avatar-{{student.student_id}}" src="{{student.img_url}}" alt="Avatar">
                 <p id="student-fullname-{{student.student_id}}">{{student.first_name}} {{student.last_name}}</p>
                 <p id="student-sex-{{student.student_id}}">{{ student.sex }}</p>
