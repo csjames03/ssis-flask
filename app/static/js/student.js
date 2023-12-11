@@ -127,7 +127,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         if(response.ok){
             const res = await response.json()
             ModalSuccess()
-            Success(res.message)
+            console.log(res.message.message)
+            Success(res.message.message)
             AppendStudentCard(data.student_id, data.first_name, data.last_name, data.gender, data.year_level, data.course_code, res.img_url)
             StudentEditInfoGetter()
             document.querySelector('#add_student_submit_button').disabled = false;
@@ -137,7 +138,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         
         const res = await response.json()
         ModalError('add-student-modal-container')
-        Error(res.message)
+        Error(res.message.message)
         document.querySelector('#add_student_submit_button').disabled = false;
         document.querySelector('#add_student_submit_button').value = 'Submit'
         return  
