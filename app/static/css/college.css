@@ -49,6 +49,8 @@
 .college-clippath{
     width: 100%;
     background-image: url("../images/college.jpg");
+    background-position: center;
+    background-size: cover;
     height: 100%;
     clip-path: polygon(50% 0%, 100% 0, 100% 1%, 60% 35%, 15% 65%, 0 100%, 0 0);
 }
