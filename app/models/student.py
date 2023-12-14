@@ -4,7 +4,9 @@ from app import mysql
 class Students:
     def get_students(self):
         cursor = mysql.new_cursor(dictionary=True)
-        cursor.execute("SELECT * FROM student")
+        cursor.execute(
+            "SELECT * FROM student INNER JOIN course ON student.course_code = course.course_code INNER JOIN college ON course.college_code = college.college_code;"
+        )
         data = cursor.fetchall()
         return data
 
@@ -126,7 +128,7 @@ class Students:
     def search_students_across_columns(self, search_term):
         cursor = mysql.new_cursor(dictionary=True)
         try:
-            # Construct a dynamic query to search across all columns except "gender"
+            # Construct a dynamic query to search across all columns in the student table
             columns_query = "SHOW COLUMNS FROM student"
             cursor.execute(columns_query)
             columns = [column["Field"] for column in cursor.fetchall()]
@@ -134,19 +136,37 @@ class Students:
             if not columns:
                 return {"message": "No columns found in the student table"}, 500
 
-            # Exclude the "gender" column from the search
-            columns_to_search = [
-                column for column in columns if column != "sex" and column != "img_url"
-            ]
-
             # Construct a dynamic query using CONCAT for selected columns
             concatenated_columns = ", ".join(
-                [f"CONCAT_WS(' ', {column})" for column in columns_to_search]
+                [f"CONCAT_WS(' ', {column})" for column in columns]
             )
-            query = f"SELECT * FROM student WHERE CONCAT_WS(' ', {concatenated_columns}) LIKE %s"
 
-            # Use the LIKE operator to search for the specified term
-            cursor.execute(query, ("%" + search_term + "%",))
+            # Modify the SQL query to join with courses and colleges tables
+            query = f"""
+               SELECT s.*, CONCAT(cl.college_name, ' (', cl.college_code, ')') AS college_info
+                FROM student AS s
+                JOIN course AS c ON s.course_code = c.course_code
+                JOIN college AS cl ON c.college_code = cl.college_code
+                WHERE s.student_id LIKE %s
+                OR s.first_name LIKE %s
+                OR s.last_name LIKE %s
+                OR s.sex = %s
+                OR s.year_level LIKE %s
+                OR s.course_code LIKE %s
+                OR CONCAT(cl.college_name, ' (', cl.college_code, ')') LIKE %s
+            """
+
+            search_pattern = "%" + search_term + "%"
+            parameters = (
+                search_pattern,
+                search_pattern,
+                search_pattern,
+                search_pattern,
+                search_pattern,
+                search_pattern,
+                search_pattern,
+            )
+            cursor.execute(query, parameters)
 
             data = cursor.fetchall()
             return data, 200

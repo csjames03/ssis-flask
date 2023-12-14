@@ -9,12 +9,14 @@
         {% for student in students %}
 
             <div class="student-info-container" id="student-info-container-{{student.student_id}}">
-                
+                <p id="student-id-{{student.student_id}}">{{student.student_id}}</p>
                 <img class="student-avatar" id="student-avatar-{{student.student_id}}" src="{{student.img_url}}" alt="Avatar">
                 <p id="student-fullname-{{student.student_id}}">{{student.first_name}} {{student.last_name}}</p>
                 <p id="student-sex-{{student.student_id}}">{{ student.sex }}</p>
                 <p id="student-year-{{student.student_id}}">{{ student.year_level }}</p>
                 <p id="student-course-{{student.student_id}}">{{ student.course_code }}</p>
+                <p id="student-college-{{student.student_id}}">{{student.college_name}}({{student.college_code}})</p>
+                <p id="student-college-{{student.student_id}}">{{student.college_info}}</p>
                 <div class="student-action">
                     <div class="edit-icon-student-container" id="edit-student-{{student.student_id}}">
                         <img src="{{url_for('static', filename='images/editIcon.png')}}" alt="Edit Icon">

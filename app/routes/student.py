@@ -117,10 +117,10 @@ def delete_student():
 def search_student():
     req = request.json
     query = req["query"]
-    print(query)
     student = students_model.search_students_across_columns(query)
     message = student[0]
     status_code = student[1]
+    print(message, status_code)
 
     return message, status_code
 

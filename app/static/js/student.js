@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         
             const students = await request.json();
         
-            students.forEach(student => AppendStudentCard(student.student_id, student.first_name, student.last_name, student.sex, student.year_level, student.course_code, student.img_url));
+            students.forEach(student => AppendStudentCard(student.student_id, student.first_name, student.last_name, student.sex, student.year_level, student.course_code, student.img_url, student.college_info,));
             AddDeleteEvents(students);
             AddEditEvents(students);
         }
@@ -220,7 +220,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         return null;
       }
       
-    function AppendStudentCard(id, fname, lname, gender, year, course, img_url){
+    function AppendStudentCard(id, fname, lname, gender, year, course, img_url, college='',ccode=''){
         const div = document.createElement('div')
         const container = document.querySelector('.student-main-container')
         div.id = `student-info-container-${id}`
@@ -228,11 +228,12 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         div.innerHTML =`
                     <img class="student-avatar" id="student-avatar-${id}" src="${img_url}" alt="Avatar Icon">
                     
-                    
+                    <p id="student-id-${id}">${id}</p>
                     <p  id="student-fullname-${id}">${fname} ${lname}</p>
                     <p  id="student-sex-${id}">${gender}</p>
                     <p  id="student-year-${id}">${year}</p>
                     <p  id="student-course-${id}">${course}</p>
+                    <p id="student-college-${id}">${college}</p>
                     <div class="student-action">
                         <div class="edit-icon-student-container">
                             <img src="/static/images/editIcon.png" alt="Edit Icon" id="edit-student-${id}">
@@ -481,8 +482,28 @@ window.addEventListener('DOMContentLoaded', async ()=>{
     const fileInput = document.getElementById('fileInput');
     const avatar = document.querySelector('#avatar');
 
+
         fileInput.addEventListener('change', ()=>{
+            const file = fileInput.files[0];
+            if (file) {
+                // Check file size (less than 1MB)
+                if (file.size > 1024 * 1024) {
+                    Error('File size must be less than 1MB.');
+                    fileInput.value = ''; // Clear the file input
+                    
+                }
+            }
+
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!allowedTypes.includes(file.type)) {
+                Error('Only .jpg, .jpeg, and .png files are allowed.');
+                fileInput.value = ''; // Clear the file input
+                return;
+            }
+
+                
             avatar.src = URL.createObjectURL(fileInput.files[0]);
+
         })
 
 
