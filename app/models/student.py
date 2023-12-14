@@ -135,7 +135,9 @@ class Students:
                 return {"message": "No columns found in the student table"}, 500
 
             # Exclude the "gender" column from the search
-            columns_to_search = [column for column in columns if column != "sex"]
+            columns_to_search = [
+                column for column in columns if column != "sex" and column != "img_url"
+            ]
 
             # Construct a dynamic query using CONCAT for selected columns
             concatenated_columns = ", ".join(
